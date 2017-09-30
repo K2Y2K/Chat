@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="4"
+        android:icon="@mipmap/ic_add"
+        android:showAsAction="always|withText">
+        <menu>
+            <group android:checkableBehavior="none">
+                <item android:id="@+id/menu_one" android:title="menu_one"/>
+                <item android:id="@+id/menu_two" android:title="menu_two"/>
+                <item android:id="@+id/menu_three" android:title="menu_three"/>
+            </group>
+        </menu>
+
+    </item>
+
+</menu>

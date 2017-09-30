@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!--采用的是线性布局　没有出现布局覆盖问题-->
+    <!--<include layout="@layout/include_toolbar"/>-->
+
+
+    <com.example.lidongxue.chat.view.MyViewPager
+        android:id="@+id/main_activity_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </com.example.lidongxue.chat.view.MyViewPager>
+
+    <!--底部-->
+    <View
+        style="@style/Line"
+        />
+    <RadioGroup
+        android:id="@+id/main_activity_radio_group"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+        <RadioButton
+            android:text="@string/radiobutton1"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_message_rbt"
+            android:drawableTop="@drawable/main_message"
+            />
+        <RadioButton
+            android:text="@string/radiobutton2"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_contacts_rbt"
+            android:drawableTop="@drawable/main_contacts"
+            />
+        <RadioButton
+            android:text="@string/radiobutton3"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_friendcircle_rbt"
+            android:drawableTop="@drawable/main_friendcircle"/>
+        <RadioButton
+            android:text="@string/radiobutton4"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_mine_rbt"
+            android:drawableTop="@drawable/main_mine"
+            />
+    </RadioGroup>
+
+
+</LinearLayout>

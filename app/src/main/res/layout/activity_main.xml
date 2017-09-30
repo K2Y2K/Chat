@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RadioGroup
+
+        android:id="@+id/main_activity_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="top"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="2dp"
+        >
+
+        <RadioButton
+            android:text="@string/radiobutton1"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_message_rbt"
+            android:drawableTop="@drawable/main_message"
+            />
+        <RadioButton
+            android:text="@string/radiobutton2"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_contacts_rbt"
+            android:drawableTop="@drawable/main_contacts"
+            />
+        <RadioButton
+            android:text="@string/radiobutton3"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_friendcircle_rbt"
+            android:drawableTop="@drawable/main_friendcircle"/>
+        <RadioButton
+            android:text="@string/radiobutton4"
+            style="@style/RadioButtonstyle"
+            android:id="@+id/main_activity_mine_rbt"
+            android:drawableTop="@drawable/main_mine"
+            />
+    </RadioGroup>
+
+
+   <!-- <include layout="@layout/include_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/app_toolBar"
+       />-->
+    <!--android:layout_below="@id/app_toolBar"-->
+    <com.example.lidongxue.chat.view.MyViewPager
+        android:id="@+id/main_activity_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@id/main_activity_radio_group"
+        >
+    </com.example.lidongxue.chat.view.MyViewPager>
+
+
+    <!--底部  但在相对布局中不显示　不知道什么原因-->
+    <View
+        android:layout_below="@id/main_activity_content"
+        android:layout_above="@id/main_activity_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Line_1"
+
+        />
+
+
+
+</RelativeLayout>

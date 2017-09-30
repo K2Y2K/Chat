@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--activity_login.xml-->
+    <dimen name="login_paddingleft_1">30dp</dimen>
+    <dimen name="login_paddingright_1">30dp</dimen>
+    <dimen name="login_paddingleft_2">20dp</dimen>
+    <dimen name="login_paddingright_2">20dp</dimen>
+    <dimen name="login_textsize_1">14sp</dimen>
+    <dimen name="login_textsize_2">20sp</dimen>
+    <dimen name="login_margintop_1">10dp</dimen>
+    <dimen name="login_marginBottom_2">30dp</dimen>
+    <dimen name="login_margintop_2">30dp</dimen>
+    <dimen name="login_marginBottom_1">10dp</dimen>
+    <dimen name="login_padding_1">10dp</dimen>
+
+    <dimen name="buttonCornerSize">2.0dip</dimen>
+    <dimen name="marginleft_reg">20dp</dimen>
+    <dimen name="marginright_reg">20dp</dimen>
+    <!--include_toolbar.xml-->
+    <dimen name="item_margin_left_and_right">4dp</dimen>
+    <!--activity_main.xml-->
+    <dimen name="main_marginBottom_1">5dp</dimen>
+    <dimen name="main_bottom_iv_horizontal_size">59px</dimen>
+    <dimen name="main_bottom_iv_vertical_size">54px</dimen>
+    <dimen name="activity_main_bottom_textsize">12sp</dimen>
+    <!--include_toolsbar.xml-->
+    <dimen name="toolsbar_textsize">20sp</dimen>
+    <!--header_rv_contacts.xml-->
+    <dimen name="item_margin_top_and_bottom">5dp</dimen>
+    <dimen name="item_margin_left_and_right_1">5dp</dimen>
+    <dimen name="iv_marginRight">5dp</dimen>
+    <dimen name="iv_marginTop">5dp</dimen>
+    <dimen name="header_contacts_textSize">14sp</dimen>
+    <!--fragment_me.xml-->
+    <dimen name="option_item_margin_top">50dp</dimen>
+    <dimen name="option_item_margin_right">50dp</dimen>
+
+
+</resources>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <FrameLayout
+        android:id="@+id/flToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            >
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/toolsbar_textsize"
+                android:gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:visibility="visible"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar_title"
+                android:visibility="gone"
+                android:layout_margin="5dp">
+                <ImageView
+                android:id="@+id/ivToolbarNavigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_back"
+                />
+                <View
+                android:id="@+id/vToolbarDivision"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/ivToolbarNavigation"
+                android:background="@drawable/shape_vertical_line"
+                />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llToolbarSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/toolbar_title"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvToolbarSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="你好"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/toolsbar_textsize"
+                    />
+            </LinearLayout>
+            <!--联系人按钮-->
+            <ImageButton
+                android:id="@+id/ibToolbarContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:src="@mipmap/ic_friend_male"
+                android:visibility="gone"/>
+
+            <!--加号菜单-->
+            <ImageButton
+                android:id="@+id/ibAddMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:src="@mipmap/ic_add"
+                android:visibility="visible"/>
+            <!--搜索按钮-->
+            <ImageButton
+                android:id="@+id/ibToolbarSearchContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:src="@mipmap/ic_search"
+                android:layout_toLeftOf="@id/ibAddMenu"
+                android:visibility="visible"/>
+
+
+            <!--添加朋友-->
+            <LinearLayout
+                android:id="@+id/llToolbarAddFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="40px"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/ivToolbarNavigation"
+                    android:background="@drawable/shape_vertical_line"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/tvToolbarAddFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/add_friend"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/toolsbar_textsize"/>
+            </LinearLayout>
+
+
+            <!--搜索事件栏-->
+            <LinearLayout
+                android:id="@+id/llToolbarSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/toolbar_title"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/etSearchContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/ic_search"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/search"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray1"
+                    android:textSize="12sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/shape_bottom_green"/>
+            </LinearLayout>
+
+
+            <!--发送按钮-->
+            <Button
+                android:id="@+id/btnToolbarSend"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/send"
+                android:textColor="@color/white"
+                android:visibility="gone"/>
+
+            <!--更多按钮-->
+            <ImageButton
+                android:id="@+id/ibToolbarMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:src="@mipmap/ic_friend_more"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
