@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.lidongxue.chat.activity.AddFriendActivity;
 import com.example.lidongxue.chat.adapter.Myadapter;
 import com.example.lidongxue.chat.fragment.FourFragment;
 import com.example.lidongxue.chat.fragment.OneFragment;
@@ -134,7 +135,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent1);
                 break;
             case R.id.menu_add_one:
-
+                Intent intent2=new Intent(this,AddFriendActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
                 break;
             case R.id.menu_add_two:
 
