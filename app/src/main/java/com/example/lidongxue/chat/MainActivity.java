@@ -128,6 +128,18 @@ public class MainActivity extends AppCompatActivity
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
+            case R.id.menu_search:
+                Intent intent1=new Intent(this,M.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+                break;
+            case R.id.menu_add_one:
+
+                break;
+            case R.id.menu_add_two:
+
+                break;
+
         }
 
         return true;
