@@ -23,5 +23,7 @@ public class OneFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_recent_message, container, false);
     }
 
+
+
 }
 

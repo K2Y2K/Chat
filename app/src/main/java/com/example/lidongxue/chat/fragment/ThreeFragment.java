@@ -21,4 +21,6 @@ public class ThreeFragment extends Fragment {
         System.out.println("ThreeFragment");
         return inflater.inflate(R.layout.activity_reg, container, false);
     }
+
+
 }
