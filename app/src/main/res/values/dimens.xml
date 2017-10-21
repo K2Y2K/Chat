@@ -31,9 +31,33 @@
     <dimen name="iv_marginRight">5dp</dimen>
     <dimen name="iv_marginTop">5dp</dimen>
     <dimen name="header_contacts_textSize">14sp</dimen>
-    <!--fragment_me.xml-->
+    <!--fragment_me.xml--><!--选项间距-->
     <dimen name="option_item_margin_top">50dp</dimen>
     <dimen name="option_item_margin_right">50dp</dimen>
+    <dimen name="option_item_margin_left">50dp</dimen>
+
+    <!--activity_add_friend.xml-->
+    <dimen name="a_add_fre_marginT">10dp</dimen>
+    <dimen name="a_add_fre_padding">10dp</dimen>
+    <dimen name="a_add_fre_drawableP">20dp</dimen>
+    <dimen name="a_add_fre_marginT_5">5dp</dimen>
+    <dimen name="a_add_fre_height">2dp</dimen>
+    <dimen name="a_add_fre_marginB">10dp</dimen>
+    <dimen name="a_add_fre_marginR">10dp</dimen>
+    <dimen name="a_add_fre_marginL">10dp</dimen>
+    <dimen name="a_add_fre_textsize1">14sp</dimen>
+    <dimen name="a_add_fre_textsize2">12sp</dimen>
+    <dimen name="a_add_fre_marginT2">5dp</dimen>
+    <dimen name="a_search_user_textsize">14sp</dimen>
+    <dimen name="a_search_user_rltip_height">50dp</dimen>
+    <dimen name="a_search_user_viewHeight">10dp</dimen>
+    <dimen name="a_search_user_paddingL">10dp</dimen>
+    <dimen name="a_search_user_paddingR">10dp</dimen>
+    <dimen name="a_search_user_marginB">10dp</dimen>
+    <dimen name="a_search_user_marginT">10dp</dimen>
+    <dimen name="a_search_user_marginL">10dp</dimen>
+    <dimen name="a_search_user_textsize2">12sp</dimen>
+    <dimen name="a_search_user_padding">10dp</dimen>
 
 
 </resources>

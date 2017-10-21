@@ -67,7 +67,7 @@ public class main extends AppCompatActivity
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
         //声明一个下标,并赋值
-        int index = -1;
+        int index =0;
         switch (checkedId) {
             case R.id.main_activity_message_rbt:
                 index = 0;

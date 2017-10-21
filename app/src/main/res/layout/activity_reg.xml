@@ -54,6 +54,13 @@
                         />
 
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/chat_5"
+                    android:layout_marginBottom="40dp"/>
 
                 <View style="@style/Line" />
 

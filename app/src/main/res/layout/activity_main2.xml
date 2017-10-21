@@ -7,7 +7,7 @@
     <!--采用的是线性布局　没有出现布局覆盖问题-->
     <!--<include layout="@layout/include_toolbar"/>-->
 
-
+    <include layout="@layout/toolbar" />
     <com.example.lidongxue.chat.view.MyViewPager
         android:id="@+id/main_activity_content"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             style="@style/RadioButtonstyle"
             android:id="@+id/main_activity_message_rbt"
             android:drawableTop="@drawable/main_message"
-            />
+            android:checked="true"/>
         <RadioButton
             android:text="@string/radiobutton2"
             style="@style/RadioButtonstyle"

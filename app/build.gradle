@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -28,6 +28,29 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.3.1'
+    compile files('libs/jxmpp-core-0.4.0-alpha1.jar')
+    compile files('libs/jxmpp-util-cache-0.4.0-alpha1.jar')
+    compile files('libs/smack-android-4.1.9.jar')
+    compile files('libs/smack-android-extensions-4.1.9.jar')
+    compile files('libs/smack-core-4.1.9.jar')
+    compile files('libs/smack-experimental-4.1.9.jar')
+    compile files('libs/smack-extensions-4.1.9.jar')
+    compile files('libs/smack-im-4.1.9.jar')
+    compile files('libs/smack-jingle-old-4.1.9.jar')
+    compile files('libs/smack-sasl-provided-4.1.9.jar')
+    compile files('libs/smack-tcp-4.1.9.jar')
+    //rx系列
+    compile 'io.reactivex:rxjava:1.1.9'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    //圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    //ButterKnife专用
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.android.support:design:25.3.1'
+
 }
 configurations.all {
 

@@ -3,12 +3,12 @@
     <string name="app_name">Chat</string>
     <string name="area">国家／地区</string>
     <string name="login_1_2">中国</string>
-    <string name="login_2_1">+86</string>
-    <string name="login_2_2">手机号码</string>
+    <string name="login_2_1">账号</string>
+    <string name="login_2_2">QQ号/手机号/邮箱</string>
     <string name="password">密码</string>
     <string name="login_3_2">填写密码</string>
     <string name="login_bn">登　录</string>
-    <string name="login_text_5">用短信验证码登录</string>
+    <string name="login_text_5">新用户</string>
     <string name="login_leftbottom_text">登录遇到问题?</string>
     <string name="login_rightbottom_text">使用其他方式登录</string>
 
@@ -54,6 +54,24 @@
     <string name="add_phone_number">添加电话号码</string>
     <string name="add_business_card_or_pic">添加名片或相关图片</string>
     <string name="please_to_talk">按住 说话</string>
+
+    <!--activity_add_friend-->
+    <string name="wechat_qq_phone">微信号／ＱＱ／微博</string>
+    <string name="my_wechat_account">我的微信号:</string>
+    <string name="radar_add_friend">雷达加朋友</string>
+    <string name="add_near_friend">添加身边的朋友</string>
+    <string name="create_group_face_to_face">面对面建群</string>
+    <string name="create_group_with_near_friend">与身边的朋友进入同一个群聊</string>
+    <string name="scan_qr_code_business_card">扫描二维码名片</string>
+    <string name="phone_contacts">手机联系人</string>
+    <string name="add_friend_from_contact">添加或邀请通讯录中的朋友</string>
+    <string name="public_number">公众号</string>
+    <string name="get_more_info_and_service">获取更多资讯和服务</string>
+    <string name="scan_one_scan">扫一扫</string>
+
+
+    <string name="exit">退出</string>
+    <string name="user_no_found">该用户不存在</string>
 
 
 </resources>

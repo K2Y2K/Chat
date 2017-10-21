@@ -123,7 +123,17 @@
         android:layout_marginLeft="@dimen/item_margin_left_and_right"
         android:layout_marginRight="@dimen/item_margin_left_and_right"
         />
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:id="@+id/llcontact_list">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_list">
 
+        </ListView>
+    </LinearLayout>
 
     <!--<LinearLayout
         android:layout_width="match_parent"
