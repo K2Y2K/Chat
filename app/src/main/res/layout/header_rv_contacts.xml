@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
 
         </RelativeLayout>
@@ -127,12 +127,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
         android:id="@+id/llcontact_list">
-        <ListView
+        <!--<ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/contact_list">
 
-        </ListView>
+        </ListView>-->
+        <ExpandableListView
+            android:id="@+id/contact_expand_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#ddd"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 
     <!--<LinearLayout

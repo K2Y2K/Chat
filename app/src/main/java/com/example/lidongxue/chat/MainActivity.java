@@ -24,6 +24,7 @@ import com.example.lidongxue.chat.activity.AddFriendActivity;
 import com.example.lidongxue.chat.activity.BaseActivity;
 import com.example.lidongxue.chat.activity.GroupChatActivity;
 import com.example.lidongxue.chat.activity.LoginActivity;
+import com.example.lidongxue.chat.activity.NewFriendActivity;
 import com.example.lidongxue.chat.activity.SearchActivity;
 import com.example.lidongxue.chat.adapter.Myadapter;
 import com.example.lidongxue.chat.entity.User;
@@ -186,12 +187,12 @@ public class MainActivity extends BaseActivity
                 startActivity(intent1);
                 break;
             case R.id.menu_add_one:
-                Intent intent2=new Intent(this,AddFriActivity.class);
+                Intent intent2=new Intent(this,AddFriendActivity.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent2);
                 break;
             case R.id.menu_add_two:
-                Intent intent3=new Intent(this,AddFriendActivity.class);
+                Intent intent3=new Intent(this,AddFriActivity.class);
                 intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent3);
                 break;
@@ -320,22 +321,46 @@ public class MainActivity extends BaseActivity
      * 观察请求状态
      */
     public void RequestListener() {
+        Log.i("--MainActivity-reqN1-","subscribe-"+requestName);
+
         subscription = RxBus.getInstance().toObserverable(FriendListenerEvent.class).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<FriendListenerEvent>() {
                     @Override
                     public void call(FriendListenerEvent friendListenerEvent) {
                         requestName = friendListenerEvent.getRequestName();
+                        Log.i("--MainActivity-reqN2-","subscribe"+requestName);
                         if ("MainActivity".equals(friendListenerEvent.getReciverClass())) {
-                            if ("subscrib".equals(friendListenerEvent.getRequestType())) {
+                            if ("subscribe".equals(friendListenerEvent.getRequestType())) {
+                                Log.i("--MainActivity-reqN3-","subscribe"+requestName);
                                 //收到好友请求
                                 showDialog("好友申请", "账号为" + requestName + "发来一条好友申请");
+
+                                Intent intent = new Intent();
+                                intent.putExtra("acceptStatus",1);
+                                intent.putExtra("response", requestName);
+                                intent.setAction(NewFriendActivity.RECEIVER_USER);
+                                sendBroadcast(intent);
+
+                                Log.i("--MainActivity-reqN4-","subscribe"+requestName);
                             } else if ("subscribed".equals(friendListenerEvent.getRequestType())) {
                                 //通过好友请求
-                                showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
+                                Intent intent = new Intent();
+                                intent.putExtra("acceptStatus",2);
+                                intent.putExtra("response", requestName);
+                                intent.setAction(NewFriendActivity.RECEIVER_USER);
+                                sendBroadcast(intent);
+                                //showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
+                                Log.i("--MainActivity-reqN-","subscribed"+requestName);
                             } else if ("unsubscribe".equals(friendListenerEvent.getRequestType())) {
                                 //拒绝好友请求
-                                showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
+                                Intent intent = new Intent();
+                                intent.putExtra("acceptStatus",3);
+                                intent.putExtra("response", requestName);
+                                intent.setAction(NewFriendActivity.RECEIVER_USER);
+                                sendBroadcast(intent);
+                                //showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
+                                Log.i("--MainActivity-reqN-","unsubscribe"+requestName);
                             }
                         }
                     }

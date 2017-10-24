@@ -11,11 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
+import com.example.lidongxue.chat.activity.ChatActivity;
+import com.example.lidongxue.chat.activity.NewFriendActivity;
+import com.example.lidongxue.chat.database.User_DB;
+import com.example.lidongxue.chat.entity.MsgList;
 import com.example.lidongxue.chat.entity.User;
 import com.example.lidongxue.chat.entity.bean.UserBean;
 import com.example.lidongxue.chat.service.ConnectionService;
@@ -44,10 +49,10 @@ public class TwoFragment extends Fragment {
     TextView mtvNewGroupUnread;
     @BindView(R.id.llcontact_list)
     LinearLayout mllcontact_list;
-    @BindView(R.id.contact_list)
-    ListView mcontact_list;
+    @BindView(R.id.contact_expand_list)
+    ExpandableListView mcontact_expand_list;
     private ConnectionService service;
-    private List<UserBean> me;
+    private List<UserBean> contact;
     private User user;
     private View mExitView;
     private CustomDialog mExitDialog;
@@ -68,10 +73,30 @@ public class TwoFragment extends Fragment {
         mllNewFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity) getActivity()).jumpToActivity(NewFriendActivity.class);
+                mtvNewFriendUnread.setVisibility(View.GONE);
+            }
+        });
+        mllGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });
 
+        mcontact_expand_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                //i代表groupPosition,i１代表childPosition,l代表id
+                String friendName = contact.get(i).getDetails().get(i1).getUserIp();
+                MsgList msgList = new User_DB(getActivity()).checkMsgList(user.getUser_id(), friendName);
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("msg_list_id", msgList.getMsg_list_id());
+                intent.putExtra("to_name", msgList.getTo_name());
+                startActivity(intent);
+                return false;
+            }
+        });
     }
     /**
      * 绑定服务

@@ -34,16 +34,22 @@ import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterGroup;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import org.jivesoftware.smackx.disco.packet.DiscoverInfo;
 import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
+import org.jivesoftware.smackx.search.ReportedData;
+import org.jivesoftware.smackx.search.UserSearchManager;
+import org.jivesoftware.smackx.xdata.Form;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lidongxue on 17-10-17.
@@ -52,6 +58,7 @@ import java.util.Map;
 public class ConnectionService extends Service {
     public static final String SERVER_NAME = "127.0.0.1";//openfire对应的主机名,即域名
     public static final String SERVER_IP = "10.10.11.109";//ip 10.0.2.2（模拟器访问主机的ＩＰ）
+    public static final String SERVER_IP1 = "127.0.0.1";
     public static final int PORT = 5222;//端口
     private XMPPTCPConnection connection;
     private User_DB dbHelper;
@@ -394,7 +401,30 @@ public class ConnectionService extends Service {
         }
         return list;
     }
-
+    /**
+     * 获取账户所有属性信息
+     * @return
+     */
+    public Set getAccountAttributes() {
+        if(isConnected()) {
+            try {
+                return AccountManager.getInstance(connection).getAccountAttributes();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        throw new NullPointerException("服务器连接失败，请先连接服务器");
+    }
+    /**
+     * 获取当前登录用户的所有好友信息
+     * @return
+     */
+    public Set getAllFriends() {
+        if(isConnected()) {
+            return Roster.getInstanceFor(connection).getEntries();
+        }
+        throw new NullPointerException("服务器连接失败，请先连接服务器");
+    }
 
     /**
      * 获取指定好友用户信息
@@ -410,6 +440,47 @@ public class ConnectionService extends Service {
             throw new NullPointerException("服务器连接失败，请先连接服务器");
         }
     }
+    /**
+     * 查询用户
+     *
+     * //@param connection
+     * //@param serverDomain
+     * @param userName1
+     * @return
+     * @throws XMPPException
+     */
+    public List<User> searchUsers(String userName1) throws SmackException.NotConnectedException, XMPPException.XMPPErrorException, SmackException.NoResponseException {
+        List<User> results = new ArrayList<User>();
+
+        System.out.println("查询开始..............." + connection.getHost()
+                +"  "+ connection.getServiceName());
+        UserSearchManager usm = new UserSearchManager(connection);
+        Form searchForm = usm.getSearchForm("search.10.10.11.109");
+        Form answerForm = searchForm.createAnswerForm();
+        answerForm.setAnswer("Username", true);
+        answerForm.setAnswer("search", userName1);
+        ReportedData data = usm.getSearchResults(answerForm, "search.127.0.0.1");
+        Iterator<ReportedData.Row> it = (Iterator<ReportedData.Row>) data.getRows();
+        ReportedData.Row row = null;
+        User user1 = null;
+        String ansS="";
+        while (it.hasNext()) {
+            user1 = new User();
+            row = it.next();
+            user1.setUser_name(row.getValues("Username").toString());
+            user1.setUser_name(row.getValues("search").toString());
+           // user1.setUser_name(row.getValues("userName").next().toString());
+            ansS=row.getValues("search").toString()+"\n";
+
+          //  System.out.println(row.getValues("userAccount").next());
+            System.out.println("---Username--"+row.getValues("Username"));
+            System.out.println("---search--"+row.getValues("search"));
+            System.out.println("---Username--"+ansS);
+            results.add(user1);
+            // 若存在，则有返回,UserName一定非空，其他两个若是有设，一定非空
+        }
+        return results;
+    }
 
     /**
      * 添加好友
@@ -418,9 +489,11 @@ public class ConnectionService extends Service {
      * @param nickName  昵称
      * @param groupName 组名
      */
+
     public boolean addFriend(String account, String nickName, String[] groupName) {
         try {
-            Roster.getInstanceFor(connection).createEntry(account + "@" + SERVER_IP, "", groupName);
+            Roster.getInstanceFor(connection).
+                    createEntry(account + "@" + SERVER_IP, nickName,  new String[] {String.valueOf(groupName)});
             Log.e("TAG", account + "@" + SERVER_IP + "/smack");
             return true;
         } catch (Exception e) {
@@ -428,6 +501,54 @@ public class ConnectionService extends Service {
             return false;
         }
     }
+    /**
+     * 添加好友 无分组
+     *
+     * @param account   帐号
+     * @param nickName  昵称
+     *
+     */
+    public boolean addFriend(String account, String nickName) {
+
+        if(isConnected()){
+        try {
+            Roster roster = Roster.getInstanceFor(connection);
+           // .createEntry(account + "@" + SERVER_IP, "", groupName);
+            roster.createEntry(account.trim() + "@" + SERVER_IP1, nickName, null);
+            Log.e("TAG", account + "@" + SERVER_IP1 + "/smack");
+            /*Presence presence = new Presence(Presence.Type.subscribe);
+            presence.setTo(account.trim() + "@" + SERVER_IP);
+           // presence.setFrom();
+            //presence.setTo(userId);
+            try {
+                connection.sendStanza(presence);
+            } catch (SmackException.NotConnectedException e) {
+                e.printStackTrace();
+            }*/
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        }throw new NullPointerException("服务器连接失败，请先连接服务器");
+
+    }
+    /*
+    * 删除好友*/
+    public boolean deleteFriend(String username){
+        try {
+            Roster roster = Roster.getInstanceFor(connection);
+            RosterEntry entry = roster.getEntry(username);
+            roster.removeEntry(entry);
+            return true;
+
+        }catch (Exception e){
+
+        }
+        return false;
+    }
+
+
 
 
     /**
@@ -439,14 +560,22 @@ public class ConnectionService extends Service {
         StanzaListener listener = new StanzaListener() {
             @Override
             public void processPacket(Stanza packet) {
-                Presence p = (Presence) packet;
-                Log.e("TAG", "--" + p.getFrom() + "--" + p.getType());
-                if (p.getType().toString().equals("subscrib")) {
-                    RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscrib", "MainActivity"));
+                //Presence p = (Presence) packet;
+                DiscoverInfo p = (DiscoverInfo) packet;
+                Log.e("TAG", "-1-" + p.getFrom() + "--" + p.getType());
+                if (p.getType().toString().equals(Presence.Type.subscribe)) {
+                    RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribe", "MainActivity"));
+                    Log.e("TAG", "-2-" + p.getFrom() + "--" + p.getType());
                 } else if (p.getType().toString().equals("subscribed")) {
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribed", "MainActivity"));
                 } else if (p.getType().toString().equals("unsubscribe")) {
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "unsubscribe", "MainActivity"));
+                }
+                else if (p.getType().equals(Presence.Type.unsubscribed)){
+                } else if (p.getType().equals(Presence.Type.unavailable)) {
+                    System.out.println("好友下线！");
+                } else {
+                    System.out.println("好友上线！");
                 }
             }
         };
@@ -466,6 +595,7 @@ public class ConnectionService extends Service {
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -474,7 +604,7 @@ public class ConnectionService extends Service {
      * @param userId 用户id
      */
     public void accept(String userId) {
-        Presence presence = new Presence(Presence.Type.subscribe);
+        Presence presence = new Presence(Presence.Type.subscribed);
         presence.setTo(userId);
         try {
             connection.sendStanza(presence);
@@ -595,6 +725,23 @@ public class ConnectionService extends Service {
             return false;
         }
     }
+    /**
+     * 删除当前登录的用户信息(从服务器上删除当前用户账号)
+     * @return
+     */
+    public boolean deleteUser() {
+        if (!isConnected()) {
+            return false;
+        }
+        try {
+            AccountManager manager = AccountManager.getInstance(connection);
+            manager.deleteAccount();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
+    }
 
 }

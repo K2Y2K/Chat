@@ -39,7 +39,7 @@ public class AddFriActivity extends BaseActivity {
 
         //设置sv默认是否自动缩小为图标
         msearch_user.setIconifiedByDefault(false);
-        //设置显示收索按钮
+        //设置显示搜索提交按钮
         msearch_user.setSubmitButtonEnabled(true);
 
         //设置sv默认显示的提示文本

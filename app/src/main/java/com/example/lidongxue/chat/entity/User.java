@@ -19,6 +19,11 @@ public class User implements Serializable {
         this.user_head_img = user_head_img;
     }
 
+    public User() {
+
+    }
+
+
     public int getUser_id() {
         return user_id;
     }

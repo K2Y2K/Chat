@@ -36,6 +36,20 @@
         <activity android:name=".activity.WebViewActivity"/>
         <activity android:name=".activity.SearchPhoneContactActivity"/>
         <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.NewFriendActivity"/>
+        <activity android:name=".activity.UserInfoActivity"/>
+        <activity android:name=".activity.ChatActivity"/>
+
+        <receiver android:name=".activity.NewFriendActivity$MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <!-- 静态注册广播 -->
+            <!-- intent过滤器,指定可以匹配哪些intent, 一般需要定义action 可以是自定义的也可是系统的 -->
+            <intent-filter>
+                <!--action-->
+                <action android:name="com.example.lidongxue.chat.newFriendActivity" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".activity.SearchUserActivity"
             android:windowSoftInputMode = "adjustPan">
