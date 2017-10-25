@@ -57,7 +57,7 @@ import java.util.Set;
 
 public class ConnectionService extends Service {
     public static final String SERVER_NAME = "127.0.0.1";//openfire对应的主机名,即域名
-    public static final String SERVER_IP = "10.10.11.109";//ip 10.0.2.2（模拟器访问主机的ＩＰ）
+    public static final String SERVER_IP = "10.0.2.2";//ip 10.0.2.2（模拟器访问主机的ＩＰ）10.10.11.109
     public static final String SERVER_IP1 = "127.0.0.1";
     public static final int PORT = 5222;//端口
     private XMPPTCPConnection connection;
