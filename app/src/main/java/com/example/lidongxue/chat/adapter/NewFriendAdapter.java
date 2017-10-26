@@ -1,6 +1,7 @@
 package com.example.lidongxue.chat.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,7 @@ public class NewFriendAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<HashMap<String, Object>> listIteminfo;
     private Callback mCallback;
-    private final int VIEW_TYPE = 3;
+    private final int VIEW_TYPE = 2;
     private final int TYPE_1 = 0;
     private final int TYPE_2 = 1;
     /**
@@ -37,7 +38,7 @@ public class NewFriendAdapter extends BaseAdapter {
         void onClick(View item, View widget, int position, int which);
    }
 
-    public NewFriendAdapter(Context mContext) {
+    public NewFriendAdapter(Context mContext, ArrayList<HashMap<String, Object>> listItems, Handler handler) {
         this.mContext = mContext;
         mInflater = LayoutInflater.from(mContext);
     }
@@ -47,12 +48,15 @@ public class NewFriendAdapter extends BaseAdapter {
         this.listIteminfo = listIteminfo;
         this.mCallback = mCallback;
         mInflater = LayoutInflater.from(mContext);
+        Log.i(TAG, "NewFriendAdapter"+listIteminfo.toString());
+
     }
 
     @Override
     public int getCount() {
 
         Log.i(TAG, "getCount");
+        Log.i(TAG, listIteminfo.size()+"");
         return listIteminfo.size();
     }
 
@@ -96,6 +100,7 @@ public class NewFriendAdapter extends BaseAdapter {
 
             switch (type){
                 case TYPE_1:
+                    Log.i(TAG, "TYPE_1");
                     convertView = mInflater.inflate(R.layout.list_item_1, parent, false);
                     holder1=new ViewHolder1();
                     holder1.bt01=convertView.findViewById(R.id.newfriend_receiver_btn);
@@ -104,10 +109,12 @@ public class NewFriendAdapter extends BaseAdapter {
                     convertView.setTag(holder1);
                     break;
                 case TYPE_2:
+                    Log.i(TAG, "TYPE_2");
                     convertView = mInflater.inflate(R.layout.list_item_2, parent, false);
                     holder2=new ViewHolder2();
                     holder2.user_name=convertView.findViewById(R.id.newfriend_title1);
                     holder2.user_info=convertView.findViewById(R.id.newfriend_receiver_tv);
+                    convertView.setTag(holder2);
                     break;
                 default:
                     break;
@@ -116,9 +123,11 @@ public class NewFriendAdapter extends BaseAdapter {
                 switch (type){
                     case TYPE_1:
                         holder1 = (ViewHolder1) convertView.getTag();
+                        Log.i(TAG, "TYPE_1_1");
                         break;
                     case TYPE_2:
                         holder2 = (ViewHolder2) convertView.getTag();
+                        Log.i(TAG, "TYPE_1_2");
                         break;
 
 
@@ -138,6 +147,7 @@ public class NewFriendAdapter extends BaseAdapter {
 
                         }
                     });
+                    Log.i(TAG, "--TYPE_1"+listIteminfo.get(position).get("ItemTitle").toString());
                    // holder1.bt01.setTag(position);
                     final int two = holder1.bt02.getId();
                     holder1.bt02.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +162,7 @@ public class NewFriendAdapter extends BaseAdapter {
                 case TYPE_2:
                     holder2.user_name.setText(listIteminfo.get(position).get("ItemTitle").toString());
                     holder2.user_info.setText(listIteminfo.get(position).get("ItemStatus").toString());
+                    Log.i(TAG, "--TYPE_2"+listIteminfo.get(position).get("ItemTitle").toString());
                     break;
             }
             /*convertView = mInflater.inflate(R.layout.list_item_1, null);

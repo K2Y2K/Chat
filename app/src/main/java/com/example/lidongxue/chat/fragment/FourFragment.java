@@ -56,6 +56,8 @@ public class FourFragment extends Fragment {
     private View mExitView;
     private CustomDialog mExitDialog;
     Intent intent;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,7 @@ public class FourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         System.out.println("－－fourFragment－nCreateView－");
-        bind();
+       // bind();
         //return inflater.inflate(R.layout.fragment_me, container, false);
         View rootView = inflater.inflate(R.layout.fragment_me, container, false);
         ButterKnife.bind(this, rootView);
@@ -148,7 +150,7 @@ public class FourFragment extends Fragment {
                             /*RongIMClient.getInstance().logout();
                          UserCache.clear();*/
 
-                            Boolean logout_user=service.logout1();
+                            Boolean logout_user=BaseApp.service.logout1();
                             LogUtil.d("---退出账号--",logout_user);
                             if(logout_user){
                                 UserCache.clear();
@@ -172,7 +174,9 @@ public class FourFragment extends Fragment {
                             //Boolean logout_app=service.disConnect();
                             LogUtil.d("---退出应用--","");
                             mExitDialog.dismiss();
-                            getActivity().unbindService(connection);
+                            //未解决问题　在aplication类中开启服务　退出程序没有解除绑定
+
+                            //getActivity().unbindService(connection);
                             //getActivity().stopService(intent);
                            // getActivity().finish();//只关闭了当前的活动　并没有关闭所有的　（当前活动启动了两次）
                             BaseApp.exit();

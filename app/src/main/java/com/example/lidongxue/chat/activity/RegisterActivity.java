@@ -35,7 +35,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private EditText name;
     private EditText psd;
     private ConnectionService service;
-
+    private boolean isBond=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
 
         initToolBar(true, "注册");
-        bindService();
+
+
+        if(!isBond){
+            bindService();
+        }
 
 
         register.setOnClickListener(RegisterActivity.this);
@@ -58,20 +62,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void bindService() {
         //开启服务获得与服务器的连接
         Intent intent = new Intent(this, ConnectionService.class);
-        bindService(intent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder iBinder) {
-                ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
-                service = binder.getService();
-                LogUtil.d("---bindService(注册)--","service is connect");
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
+        bindService(intent,connection1, BIND_AUTO_CREATE);
     }
+    ServiceConnection connection1= new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder iBinder) {
+            ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
+            service = binder.getService();
+            isBond=true;
+            LogUtil.d("---bindService(注册)--","service is connect");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBond=false;
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -98,6 +104,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(isBond){
+            unbindService(connection1);
         }
     }
 }

@@ -64,6 +64,29 @@ public class User_DB {
         }
     }
     /**
+     * 获取聊天列表
+     *
+     * @param userId
+     * @return
+     */
+    public List<MsgList> getMsgAllList(int userId) {
+        List<MsgList> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from msg_list where user_id=?", new String[]{userId + ""});
+        while (cursor.moveToNext()) {
+            int msg_list_id = cursor.getInt(cursor.getColumnIndex("msg_list_id"));
+            int user_id = cursor.getInt(cursor.getColumnIndex("user_id"));
+            String to_name = cursor.getString(cursor.getColumnIndex("to_name"));
+            String last_msg = cursor.getString(cursor.getColumnIndex("last_msg"));
+            String last_msg_time = cursor.getString(cursor.getColumnIndex("last_msg_time"));
+            int msg_list_type = cursor.getInt(cursor.getColumnIndex("msg_list_type"));
+            MsgList msgList = new MsgList(msg_list_id, user_id, to_name, last_msg, last_msg_time, msg_list_type);
+            list.add(msgList);
+        }
+        return list;
+    }
+
+
+    /**
      * 获取对应的人的聊天列表
      *
      * @param userId

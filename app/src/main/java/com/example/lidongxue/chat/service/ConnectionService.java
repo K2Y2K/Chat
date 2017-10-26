@@ -34,7 +34,6 @@ import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterGroup;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smackx.disco.packet.DiscoverInfo;
 import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 import org.jivesoftware.smackx.search.ReportedData;
@@ -305,8 +304,8 @@ public class ConnectionService extends Service {
 
                     try {
                         connection.sendStanza(presence);
-                        user = dbHelper.setUser(userName + " @10.0.2.2", password);//插入数据库
-                        UserCache.save(userName + " @10.0.2.2", password);
+                        user = dbHelper.setUser(userName + "@127.0.0.1", password);//插入数据库
+                        UserCache.save(userName + "@127.0.0.1", password);
                         /*getOfflineMessage();//一上线获取离线消息
                         initListener();//登录成功开启消息监听*/
                         RxBus.getInstance().post(new HandleEvent("LoginActivity", true));
@@ -332,10 +331,11 @@ public class ConnectionService extends Service {
                         System.out.println("获取登录资源" + connection.getConfiguration().getResource());
                         System.out.println("获取服务器名" + connection.getServiceName());
 
-                        user = dbHelper.setUser(userName + " @10.0.2.2", password);//插入数据库
-                        UserCache.save(userName + " @10.0.2.2", password);
+                        user = dbHelper.setUser(userName + "@127.0.0.1", password);//插入数据库
+                        UserCache.save(userName + "@127.0.0.1", password);
                         getOfflineMessage();//一上线获取离线消息
                         initListener();//登录成功开启消息监听
+                        //requestListener();//登录开启好友信息监听
                         RxBus.getInstance().post(new HandleEvent("LoginActivity", true));
 
                     } catch (Exception e) {
@@ -493,8 +493,8 @@ public class ConnectionService extends Service {
     public boolean addFriend(String account, String nickName, String[] groupName) {
         try {
             Roster.getInstanceFor(connection).
-                    createEntry(account + "@" + SERVER_IP, nickName,  new String[] {String.valueOf(groupName)});
-            Log.e("TAG", account + "@" + SERVER_IP + "/smack");
+                    createEntry(account + "@" + SERVER_IP1, nickName,  new String[] {String.valueOf(groupName)});
+            Log.e("TAG", account + "@" + SERVER_IP1 + "/smack");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -560,15 +560,24 @@ public class ConnectionService extends Service {
         StanzaListener listener = new StanzaListener() {
             @Override
             public void processPacket(Stanza packet) {
-                //Presence p = (Presence) packet;
-                DiscoverInfo p = (DiscoverInfo) packet;
+                Presence p = (Presence) packet;
+               // DiscoverInfo p = (DiscoverInfo) packet;
                 Log.e("TAG", "-1-" + p.getFrom() + "--" + p.getType());
-                if (p.getType().toString().equals(Presence.Type.subscribe)) {
-                    RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribe", "MainActivity"));
+                Log.e("TAG", "-1a-" + p.getTo() + "--" + p.getType());
+                //Presence.Type.subscribe
+                if (p.getType().toString().equals("subscribe")) {
                     Log.e("TAG", "-2-" + p.getFrom() + "--" + p.getType());
+                    Log.e("TAG", "-2a-" + p.getTo() + "--" + p.getType());
+                    RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribe", "MainActivity"));
+                    Log.e("TAG", "-22-" + p.getFrom() + "--" + p.getType());
+
                 } else if (p.getType().toString().equals("subscribed")) {
+                    Log.e("TAG", "-3-" + p.getFrom() + "--" + p.getType());
+                    Log.e("TAG", "-3a-" + p.getTo() + "--" + p.getType());
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribed", "MainActivity"));
                 } else if (p.getType().toString().equals("unsubscribe")) {
+                    Log.e("TAG", "-4-" + p.getFrom() + "--" + p.getType());
+                    Log.e("TAG", "-4a-" + p.getTo() + "--" + p.getType());
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "unsubscribe", "MainActivity"));
                 }
                 else if (p.getType().equals(Presence.Type.unsubscribed)){

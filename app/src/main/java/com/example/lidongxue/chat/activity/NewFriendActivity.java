@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.adapter.NewFriendAdapter;
 import com.example.lidongxue.chat.adapter.NewFriendAdapter.Callback;
+import com.example.lidongxue.chat.broadcast.MyReceiverAddFri;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,32 +30,40 @@ import butterknife.ButterKnife;
 
 public class NewFriendActivity extends BaseActivity implements AdapterView.OnItemClickListener
 ,Callback{
-    private MyReceiver receiver;
-    private static String response;
-    private static int acceptStatus;
+    private MyReceiverAddFri receiver1;
+    private static  MyReceiver receiver;
+    public static String response;
+    public static int acceptStatus;
+    public static Handler handler;
     public static final String RECEIVER_USER="com.example.lidongxue.chat.newFriendActivity";
     private  ArrayList<HashMap<String, Object>> listItems;   //存放文字、图片信息
    // private SimpleAdapter listItemAdapter;                  //适配器
-    private NewFriendAdapter listItemBaseAdapter;
+    private NewFriendAdapter listItemBaseAdapter1;
    /* @BindView(R.id.search_new_user)
     SearchView msearch_new_user;*/
     @BindView(R.id.search_newfriend_match)
     ListView msearch_newfriend_match;
-    static Handler handler;
+    // Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newfriend_note);
         ButterKnife.bind(this);
+        initToolBar(true,"新朋友");
         /*//动态注册广播
         receiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(RECEIVER_USER);
         registerReceiver(receiver, intentFilter);*/
 
+        /*//使用静态广播
+        receiver1 = new MyReceiverAddFri();*/
+
 
         //listItemAdapter=new NewFriendAdapter(this);
-        msearch_newfriend_match.setAdapter(listItemBaseAdapter);
+       // msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
+
+
        // this.setListAdapter(listItemAdapter);
         Log.i("--NewFriendActivity--","onCreate");
         listItems = new ArrayList<HashMap<String, Object>>();
@@ -71,9 +80,9 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                     // map.put("Item", R.drawable.music);//图片
                     map.put("ItemStatus","接收");
                     listItems.add(map);
-                    listItemBaseAdapter=new NewFriendAdapter(NewFriendActivity.this,
-                            listItems, (NewFriendAdapter.Callback) NewFriendActivity.this);
-                    msearch_newfriend_match.setAdapter(listItemBaseAdapter);
+                    listItemBaseAdapter1=new NewFriendAdapter(NewFriendActivity.this,
+                            listItems, NewFriendActivity.this);
+                    msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
                     msearch_newfriend_match.setOnItemClickListener(NewFriendActivity.this);
                     /*
                     //生成适配器的Item和动态数组对应的元素
@@ -86,15 +95,13 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                     );
                     NewFriendActivity.this.setListAdapter(listItemAdapter);
                    */
-
-
                 }else  if(msg.what==0x12){
                     map.put("ItemTitle", response);     //文字
                     map.put("ItemStatus","已添加");
                     listItems.add(map);
-                    listItemBaseAdapter=new NewFriendAdapter(NewFriendActivity.this,
+                    listItemBaseAdapter1=new NewFriendAdapter(NewFriendActivity.this,
                             listItems, (NewFriendAdapter.Callback) NewFriendActivity.this);
-                    msearch_newfriend_match.setAdapter(listItemBaseAdapter);
+                    msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
                     msearch_newfriend_match.setOnItemClickListener(NewFriendActivity.this);
 
 
@@ -102,9 +109,9 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                     map.put("ItemTitle", response);
                     map.put("ItemStatus","被拒绝");
                     listItems.add(map);
-                    listItemBaseAdapter=new NewFriendAdapter(NewFriendActivity.this,
+                    listItemBaseAdapter1=new NewFriendAdapter(NewFriendActivity.this,
                             listItems, (NewFriendAdapter.Callback) NewFriendActivity.this);
-                    msearch_newfriend_match.setAdapter(listItemBaseAdapter);
+                    msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
                     msearch_newfriend_match.setOnItemClickListener(NewFriendActivity.this);
 
                 }else  if(msg.what==0x14){
@@ -112,9 +119,11 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                     map.put("ItemTitle", response);
                     map.put("ItemStatus","等待验证");
                     listItems.add(map);
-                    listItemBaseAdapter=new NewFriendAdapter(NewFriendActivity.this,
+
+                    Log.i("--NewFriendActivity--",listItems.toString());
+                    listItemBaseAdapter1=new NewFriendAdapter(NewFriendActivity.this,
                             listItems, (NewFriendAdapter.Callback) NewFriendActivity.this);
-                    msearch_newfriend_match.setAdapter(listItemBaseAdapter);
+                    msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
                     msearch_newfriend_match.setOnItemClickListener(NewFriendActivity.this);
 
                 }else{
@@ -123,7 +132,7 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                 }
             }
         };
-        //使用静态广播
+      //使用静态广播
         receiver = new MyReceiver();
 
     }
@@ -175,10 +184,11 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                      + listItems.get((Integer) v.getTag()),
                 Toast.LENGTH_SHORT).show();
     }*/
-
    //内部静态广播　要在class前加上staitc　否则抛出异常
     public static class MyReceiver extends BroadcastReceiver {
+
         public MyReceiver() {
+
             Log.i("--NewFriendActivity--","MyReceiver()");
         }
 

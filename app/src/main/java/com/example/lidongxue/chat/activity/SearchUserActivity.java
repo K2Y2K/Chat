@@ -121,11 +121,12 @@ public class SearchUserActivity extends BaseActivity {
                         intent0.putExtra("user_info", query);
                         intent0.setAction("com.example.lidongxue.chat.newFriendActivity");
                         sendBroadcast(intent0);*/
+                       /* //广播没能解决问题
                         Intent intent = new Intent();
                         intent.putExtra("acceptStatus",4);
                         intent.putExtra("response", query);
                         intent.setAction(NewFriendActivity.RECEIVER_USER);
-                        sendBroadcast(intent);
+                        sendBroadcast(intent);*/
                         Log.e("----suc-searchUser--",query);
 
                     }else{

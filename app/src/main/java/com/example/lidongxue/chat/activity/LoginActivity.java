@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      private EditText psd;
     private ConnectionService service;
     private Subscription subscribe;
-
+    private boolean isBond=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +61,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         reg.setOnClickListener(this);
         user = username.getEditText();
         psd = password.getEditText();
-        bindService();
+
+        if(!isBond){
+            bindService();
+        }
         loginResult();
 
 
@@ -89,6 +92,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         LogUtil.d("---Activity生命周期--","onStop(登录)");
     }
 
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -100,22 +105,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void bindService() {
         //开启服务获得与服务器的连接
         Intent intent = new Intent(this, ConnectionService.class);
-        bindService(intent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder iBinder) {
-                ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
-                service = binder.getService();
-                LogUtil.d("---bindService(登录)--","service is connect");
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
+        bindService(intent, connection1, BIND_AUTO_CREATE);
 
     }
+    ServiceConnection connection1 = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder iBinder) {
+            ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
+            service = binder.getService();
+            isBond=true;
+            LogUtil.d("---bindService(登录)--","service is connect");
+        }
 
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //主动解除绑定　该方法不执行
+
+        }
+    };
     /**
      * 观察登录状态
      */
@@ -129,7 +136,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
 
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();//跳转后销毁活动
                         } else if (userBean.getReceiveClass().equals("LoginActivity") && !(Boolean) userBean.getMessage()) {
@@ -172,6 +179,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onDestroy() {
         if (!subscribe.isUnsubscribed()) {
             subscribe.unsubscribe();
+        }
+        if(isBond){
+            unbindService(connection1);
         }
         super.onDestroy();
         LogUtil.d("---Activity生命周期--","onDestroy(登录)");

@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/rvRecentMessage"
+
+    <ListView
+        android:id="@+id/msg_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-
+        android:divider="#ddd"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>

@@ -2,10 +2,17 @@ package com.example.lidongxue.chat.app.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
+
+import com.example.lidongxue.chat.activity.LoginActivity;
+import com.example.lidongxue.chat.service.ConnectionService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +31,9 @@ public class BaseApp extends Application {
     private static long mMainThreadId;//主线程id
     private static Looper mMainLooper;//循环队列
     private static Handler mHandler;//主线程Handler
+    public static ConnectionService service;
+    public static boolean isBondService=false;
+
 
     @Override
     public void onCreate() {
@@ -34,9 +44,47 @@ public class BaseApp extends Application {
         mMainThread = Thread.currentThread();
         mMainThreadId = android.os.Process.myTid();
         mHandler = new Handler();
+        Log.i(this.getClass().getSimpleName(),"onCreate()");
+        bindService();
 
     }
+    public void bindService() {
+        //开启服务获得与服务器的连接
+        Intent intent = new Intent(this, ConnectionService.class);
+        bindService(intent, connection1, BIND_AUTO_CREATE);
+        startService(intent);
+    }
+    public  ServiceConnection connection1 = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder iBinder) {
+            ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
+            service = binder.getService();
+            isBondService=true;
+            Log.i(this.getClass().getSimpleName(),"service is connect");
 
+            Boolean tag=service.getConnection().isAuthenticated();
+            if(!tag){
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                Log.d(this.getClass().getSimpleName(),"未登录");
+            }
+            //添加好友申请监听
+            service.requestListener();
+            Log.i(this.getClass().getSimpleName(),"添加好友申请监听zhixing");
+
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(this.getClass().getSimpleName(),"异常退出服务绑定");
+        }
+    };
+
+
+    public void  unbindservice(){
+        unbindService(connection1);
+
+    }
 
     /**
      * 添加Activity

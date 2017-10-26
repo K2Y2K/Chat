@@ -16,14 +16,15 @@
         android:theme="@style/AppTheme"
         xmlns:tools="http://schemas.android.com/tools">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"  android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.BaseActivity"
-            android:label="基类" />
+          />
         <activity android:name=".activity.LoginActivity">
 
         </activity>
@@ -39,6 +40,7 @@
         <activity android:name=".activity.NewFriendActivity"/>
         <activity android:name=".activity.UserInfoActivity"/>
         <activity android:name=".activity.ChatActivity"/>
+        <activity android:name=".activity.NewFriendGroupActivity"/>
 
         <receiver android:name=".activity.NewFriendActivity$MyReceiver"
             android:enabled="true"
@@ -50,6 +52,14 @@
                 <action android:name="com.example.lidongxue.chat.newFriendActivity" />
             </intent-filter>
         </receiver>
+        <!--<receiver android:name=".broadcast.MyReceiverAddFri"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.lidongxue.chat.newFriendActivity" />
+            </intent-filter>
+        </receiver>
+-->
 
         <activity android:name=".activity.SearchUserActivity"
             android:windowSoftInputMode = "adjustPan">
@@ -80,6 +90,7 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget"/>
         </receiver>
+
 
 
         <service android:name=".service.ConnectionService" />
