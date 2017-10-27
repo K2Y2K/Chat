@@ -43,8 +43,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -240,18 +242,21 @@ public class ConnectionService extends Service {
             public void processMessage(Chat chat, Message message) {
                 //当消息返回为空的时候，表示用户正在聊天窗口编辑信息并未发出消息
                 if (!TextUtils.isEmpty(message.getBody())) {
+                    LogUtil.d("TAG", "message.getBody() is:"+message.getBody());
                     try {
                         JSONObject object = new JSONObject(message.getBody());
                         String type = object.getString("type");
                         String data = object.getString("data");
-                        LogUtil.d("TAG", data);
+                        LogUtil.d("TAG", "type is:"+type);
+                        LogUtil.d("TAG", "data is:" +data);
                         message.setFrom(message.getFrom().split("/")[0]);
                         message.setBody(data);
-                        dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, System.currentTimeMillis() + "", message.getFrom(), 2);
+                        dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data,  getDate() + "", message.getFrom(), 2);
                         RxBus.getInstance().post(message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         };
@@ -264,7 +269,15 @@ public class ConnectionService extends Service {
         };
         manager.addChatListener(chatManagerListener);
     }
-
+    /**
+     * 发送消息时，获取当前时间
+     *
+     * @return 当前时间
+     */
+    private String getDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return format.format(new Date());
+    }
 
     /**
      * 登录
@@ -419,9 +432,22 @@ public class ConnectionService extends Service {
      * 获取当前登录用户的所有好友信息
      * @return
      */
-    public Set getAllFriends() {
+    public List<UserBean.UserBeanDetails> getAllFriends() {
         if(isConnected()) {
-            return Roster.getInstanceFor(connection).getEntries();
+            List<UserBean.UserBeanDetails> detail = new ArrayList<>();
+            Set<RosterEntry> entries= Roster.getInstanceFor(connection).getEntries();
+            for (RosterEntry entry : entries) {
+                UserBean.UserBeanDetails user = new UserBean.UserBeanDetails();
+                user.setUserIp(entry.getUser());
+                user.setPickName(entry.getName());
+                user.setType(entry.getType());
+                user.setStatus(entry.getStatus());
+                detail.add(user);
+
+            }
+            return detail;
+
+            //return Roster.getInstanceFor(connection).getEntries();
         }
         throw new NullPointerException("服务器连接失败，请先连接服务器");
     }

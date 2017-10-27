@@ -6,7 +6,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,9 +40,12 @@ public class UserInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         ButterKnife.bind(this);
-        initToolBar(true,"用户详细资料");
-
         intent=getIntent();
+        String user_contacts_name=intent.getStringExtra("user_id");
+
+        initToolBar(true,user_contacts_name);
+
+        /*intent=getIntent();
         userinfo= (List<User>) intent.getSerializableExtra("user_info");
 
         bind();
@@ -53,7 +55,7 @@ public class UserInfoActivity extends BaseActivity {
             public void onClick(View view) {
                 service.addFriend((userinfo.get(0)).getUser_name(),null);
             }
-        });
+        });*/
     }
     /**
      * 绑定服务

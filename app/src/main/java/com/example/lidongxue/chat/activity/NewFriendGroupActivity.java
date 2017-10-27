@@ -32,6 +32,7 @@ public class NewFriendGroupActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_group);
         ButterKnife.bind(this);
+        initToolBar(true,"群组");
         mcontact_expand_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {

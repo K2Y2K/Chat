@@ -23,7 +23,7 @@ public class User_SQL extends SQLiteOpenHelper {
             "create table user(user_id  INTEGER primary key autoincrement,user_name varchar,user_psd varchar,user_head_img varchar)";
 
     final String CREATE_TABLE_MSG_LIST=
-            "create table msg_list(msg_list_id  INTEGER primary key autoincrement,user_id INTEGER,to_name varchar,last_msg varchar,last_msg_time varchar,msg_list_type)";
+            "create table msg_list(msg_list_id  INTEGER primary key autoincrement,user_id INTEGER,to_name varchar,last_msg varchar,last_msg_time varchar,msg_list_type INTEGER)";
 
     final String CREATE_TABLE_MSG=
             "create table msg(msg_id INTEGER primary key autoincrement,msg_list_id  INTEGER,from_name varchar,msg_content varchar,msg_time varchar,msg_type varchar ,from_type INTEGER)";

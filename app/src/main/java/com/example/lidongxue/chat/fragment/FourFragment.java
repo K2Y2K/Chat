@@ -156,7 +156,8 @@ public class FourFragment extends Fragment {
                                 UserCache.clear();
                             mExitDialog.dismiss();
                                 //getActivity().unbindService(connection);
-                            BaseApp.exit();
+                                BaseApp baseApp=new BaseApp();
+                                baseApp.exit();
                              getActivity().finish();
                             Intent intent = new Intent(getActivity(), LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -179,7 +180,9 @@ public class FourFragment extends Fragment {
                             //getActivity().unbindService(connection);
                             //getActivity().stopService(intent);
                            // getActivity().finish();//只关闭了当前的活动　并没有关闭所有的　（当前活动启动了两次）
-                            BaseApp.exit();
+                            //BaseApp.exit();
+                            BaseApp baseApp=new BaseApp();
+                            baseApp.exit();
                         }
                     });
                 }

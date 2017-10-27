@@ -63,6 +63,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
         ButterKnife.bind(this);
         msg_list_id = getIntent().getIntExtra("msg_list_id", -1);
         to_name = getIntent().getStringExtra("to_name");
+        helper=new User_DB(this);
         initToolBar(true, to_name);
         if(BaseApp.service!=null) {
             Log.i(this.getClass().getSimpleName(), "charActivity is:" + BaseApp.isBondService);
@@ -74,8 +75,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
             mchat_content.setOnTouchListener(this);
             mchat_send.setOnClickListener(this);
 
-           // getMsg();
+            getMsg();
             newMsg();
+            /*adapter = new ChatAdapter(msgList, this);
+            mchat_view_list.setAdapter(adapter);*/
             mchat_view_list.setSelection(msgList.size() - 1);
         }
 
@@ -86,15 +89,22 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
      */
     public void getMsg() {
         msgList.clear();
-        msgList.addAll(helper.getAllMsg(msg_list_id, -1));
-        if (adapter == null) {
-
-            adapter = new ChatAdapter(msgList, this);
-            mchat_view_list.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
+        List<Msg> list１ = helper.getAllMsg(msg_list_id, -1);
+        if(list１!=null){
+            Log.i(this.getClass().getSimpleName(), "聊天记录不为空1" + list１);
+            msgList.addAll(list１);
+            if (adapter == null) {
+                Log.i(this.getClass().getSimpleName(), "适配器对象为空" + adapter);
+                adapter = new ChatAdapter(msgList, this);
+                mchat_view_list.setAdapter(adapter);
+            } else {
+                adapter.notifyDataSetChanged();
+                Log.i(this.getClass().getSimpleName(), "适配器对象不为空" + adapter);
+            }
+            mchat_view_list.setSelection(msgList.size() - 1);
         }
-        mchat_view_list.setSelection(msgList.size() - 1);
+
+
     }
     /**
      * 发送一条消息
@@ -134,6 +144,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
             JSONObject object = new JSONObject();
             object.put("type", type);
             object.put("data", msg);
+            Log.i(this.getClass().getSimpleName(), "toJson is :" +object.toString());
             return object.toString();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -144,12 +155,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
      * 观察新消息
      */
     public void newMsg() {
+        Log.i(this.getClass().getSimpleName(), "执行newMsg()方法" );
+
         subscription = RxBus.getInstance().toObserverable(Message.class).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Message>() {
                     @Override
                     public void call(Message message) {
                         if (message.getFrom().equals(to_name)) {
+                            Log.i(this.getClass().getSimpleName(), "newMsg()收到新消息");
                             getMsg();
                         }
                     }
@@ -165,7 +179,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,V
                 if (!TextUtils.isEmpty(msg)) {
                     boolean b = sendMsg("text", msg, to_name);
                     if (b) {
-                        msgList.add(new Msg(user.getUser_name(), msg, System.currentTimeMillis() + "", "text", 1));
+                        msgList.add(new Msg(user.getUser_name(), msg,  getDate() + "", "text", 1));
                         adapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
                         mchat_content.setText("");
                         // 发送一条消息时，ListView显示选择最后一项

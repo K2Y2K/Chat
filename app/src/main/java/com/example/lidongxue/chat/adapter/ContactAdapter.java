@@ -78,7 +78,8 @@ public class ContactAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         TextView view = (TextView) LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
-        view.setText(list.get(groupPosition).getDetails().get(childPosition).getPickName());
+        //
+        view.setText(list.get(groupPosition).getDetails().get(childPosition).getUserIp());
         return view;
     }
 

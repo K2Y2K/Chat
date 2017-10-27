@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:layout_height="wrap_content"
+    android:gravity="left">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/newfriend_title"
-        android:text="3"
-
-        android:layout_marginRight="20dp"
-        android:layout_gravity="bottom|start"/>
-
-    <Button android:id="@+id/newfriend_receiver_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="接收"
+        android:layout_gravity="bottom|left"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/me_press"
+        android:gravity="center"
+        android:text="3" />
+
+    <Button
+        android:id="@+id/newfriend_receiver_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         android:layout_marginRight="20dp"
-        android:layout_gravity="bottom|end" />
+        android:text="接收"
+        android:visibility="visible"/>
 
     <Button android:id="@+id/newfriend_receiver_nobtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="拒绝"
+        android:layout_gravity="bottom|right"
+        android:visibility="visible"/>
 
-        android:layout_gravity="bottom|end" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newfriend_receiver_tv1"
+        android:layout_marginLeft="100dp"
+        android:text="yijieshou"
+        android:gravity="center"
+        android:layout_gravity="bottom|right"
+        android:visibility="gone"/>
 </LinearLayout>

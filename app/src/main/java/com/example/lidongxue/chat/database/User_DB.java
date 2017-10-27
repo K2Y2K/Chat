@@ -205,15 +205,19 @@ public class User_DB {
         List<Msg> list = new ArrayList<>();
         List<Msg> resultList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from msg where msg_list_id=?", new String[]{msg_list_id + ""});
-        while (cursor.moveToNext()) {
-            int msg_id = cursor.getInt(cursor.getColumnIndex("msg_id"));
-            String from_name = cursor.getString(cursor.getColumnIndex("from_name"));
-            String msg_content = cursor.getString(cursor.getColumnIndex("msg_content"));
-            String msg_time = cursor.getString(cursor.getColumnIndex("msg_time"));
-            String msg_type = cursor.getString(cursor.getColumnIndex("msg_type"));
-            int from_type = cursor.getInt(cursor.getColumnIndex("from_type"));
-            Msg msg = new Msg(msg_id, msg_list_id, from_name, msg_content, msg_time, msg_type, from_type);
-            list.add(msg);
+        if(cursor!=null) {
+            while (cursor.moveToNext()) {
+                int msg_id = cursor.getInt(cursor.getColumnIndex("msg_id"));
+                String from_name = cursor.getString(cursor.getColumnIndex("from_name"));
+                String msg_content = cursor.getString(cursor.getColumnIndex("msg_content"));
+                String msg_time = cursor.getString(cursor.getColumnIndex("msg_time"));
+                String msg_type = cursor.getString(cursor.getColumnIndex("msg_type"));
+                int from_type = cursor.getInt(cursor.getColumnIndex("from_type"));
+                Msg msg = new Msg(msg_id, msg_list_id, from_name, msg_content, msg_time, msg_type, from_type);
+                list.add(msg);
+            }
+        }else {
+            list=null;
         }
 //        for (int i = 10 * (page - 1); i < 10 * (page); i++) {
 //            if (i >= list.size()) {

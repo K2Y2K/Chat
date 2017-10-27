@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -48,6 +49,31 @@ public class BaseApp extends Application {
         bindService();
 
     }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Log.i(this.getClass().getSimpleName(),"onLowMemory()");
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        Log.i(this.getClass().getSimpleName(),"onTrimMemory()");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.i(this.getClass().getSimpleName(),"onConfigurationChanged()");
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Log.i(this.getClass().getSimpleName(),"onTerminate()");
+    }
+
     public void bindService() {
         //开启服务获得与服务器的连接
         Intent intent = new Intent(this, ConnectionService.class);
@@ -119,10 +145,11 @@ public class BaseApp extends Application {
      * 完全退出  销毁所有的Activity
      * 一般用于“退出程序”功能
      */
-    public static void exit() {
+    public void exit() {
         for (Activity activity : activities) {
             activity.finish();
         }
+
     }
 
     /**

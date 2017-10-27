@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.activity.NewFriendActivity;
 import com.example.lidongxue.chat.activity.NewFriendGroupActivity;
+import com.example.lidongxue.chat.activity.UserInfoActivity;
+import com.example.lidongxue.chat.adapter.ContactsAdapter;
 import com.example.lidongxue.chat.app.base.BaseApp;
 import com.example.lidongxue.chat.entity.User;
 import com.example.lidongxue.chat.entity.bean.UserBean;
@@ -48,11 +51,14 @@ public class TwoFragment extends Fragment {
 
     private ConnectionService service;
     private List<UserBean> contact;
+    List<UserBean.UserBeanDetails> contacts;
     private User user;
     private View mExitView;
     private CustomDialog mExitDialog;
     Intent intent;
     private View rootView1;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,9 +106,24 @@ public class TwoFragment extends Fragment {
 
             }
         });
-        //mcontact_list.setOnClickListener();
 
 
+        contacts = BaseApp.service.getAllFriends();
+        Log.i(this.getClass().getSimpleName(), "contacts is :"+contacts);
+        Log.i(this.getClass().getSimpleName(), "getActivity() is :"+getActivity()+";"+getContext()+";");
+        ContactsAdapter contactsAdapter=new ContactsAdapter(contacts,getActivity());
+        //ContactsAdapter contactsAdapter=new ContactsAdapter(contacts,getContext());
+        mcontact_list.setAdapter(contactsAdapter);
+
+        mcontact_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                intent.putExtra("user_id", contacts.get(position).getUserIp());
+
+                startActivity(intent);
+            }
+        });
 
 
     }
