@@ -459,9 +459,21 @@ public class ConnectionService extends Service {
      * @return
      */
 
-    public RosterEntry getUserInfo(String user) {
+    public UserBean.UserBeanDetails getUserInfo(String user) {
         if (isConnected()) {
-            return Roster.getInstanceFor(connection).getEntry(user);
+           // List<UserBean.UserBeanDetails> user_detail = new ArrayList<>();
+            RosterEntry entry_userInfo=Roster.getInstanceFor(connection).getEntry(user);
+            if(entry_userInfo!=null){
+                UserBean.UserBeanDetails userInfo = new UserBean.UserBeanDetails();
+                userInfo.setUserIp(entry_userInfo.getUser());
+                userInfo.setPickName(entry_userInfo.getName());
+                userInfo.setType(entry_userInfo.getType());
+                userInfo.setStatus(entry_userInfo.getStatus());
+                //user_detail.add(userInfo);
+                return userInfo;
+            }
+            return null;
+            //return Roster.getInstanceFor(connection).getEntry(user);
         } else {
             throw new NullPointerException("服务器连接失败，请先连接服务器");
         }

@@ -34,6 +34,13 @@ public class UserBean {
         private RosterPacket.ItemType type;
         private RosterPacket.ItemStatus status;
 
+       /* public UserBeanDetails(String userIp, String pickName, RosterPacket.ItemType type, RosterPacket.ItemStatus status) {
+            this.userIp = userIp;
+            this.pickName = pickName;
+            this.type = type;
+            this.status = status;
+        }*/
+
         public String getUserIp() {
             return userIp;
         }

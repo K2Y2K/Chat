@@ -6,12 +6,17 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lidongxue.chat.R;
+import com.example.lidongxue.chat.app.base.BaseApp;
+import com.example.lidongxue.chat.database.User_DB;
+import com.example.lidongxue.chat.entity.MsgList;
 import com.example.lidongxue.chat.entity.User;
+import com.example.lidongxue.chat.entity.bean.UserBean;
 import com.example.lidongxue.chat.service.ConnectionService;
 
 import java.util.List;
@@ -35,15 +40,45 @@ public class UserInfoActivity extends BaseActivity {
     private List<User> userinfo;
     private User user;
     Intent intent;
+    String user_contacts_name;
+    int start_type;
+    UserBean.UserBeanDetails user_info;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         ButterKnife.bind(this);
         intent=getIntent();
-        String user_contacts_name=intent.getStringExtra("user_id");
-
+       // String user_contacts_name=intent.getStringExtra("user_id");
+        Bundle bundle = intent.getExtras();
+        user_contacts_name= bundle.getString("user_id");
+        start_type=bundle.getInt("start_type");
         initToolBar(true,user_contacts_name);
+
+        muser_info_id.setText(user_contacts_name);
+        if(start_type==1){
+            muser_add.setText("发起聊天");
+
+        }
+        if(BaseApp.service!=null){
+            user = BaseApp.service.getUser();
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user.getUser_id());
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user.getUser_name());
+            user_info= BaseApp.service.getUserInfo(user_contacts_name);
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user_info.getUserIp()
+            +";"+user_info.getPickName()+";"+user_info.getStatus()+";"+user_info.getType());
+            muser_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MsgList msgList = new User_DB(UserInfoActivity.this).checkMsgList(user.getUser_id(), user_contacts_name);
+                    Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
+                    intent.putExtra("msg_list_id", msgList.getMsg_list_id());
+                    intent.putExtra("to_name", user_contacts_name);
+                    startActivity(intent);
+                }
+            });
+        }
 
         /*intent=getIntent();
         userinfo= (List<User>) intent.getSerializableExtra("user_info");
@@ -57,6 +92,7 @@ public class UserInfoActivity extends BaseActivity {
             }
         });*/
     }
+
     /**
      * 绑定服务
      */

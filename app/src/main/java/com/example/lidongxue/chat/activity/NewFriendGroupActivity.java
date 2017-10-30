@@ -2,6 +2,7 @@ package com.example.lidongxue.chat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -37,7 +38,11 @@ public class NewFriendGroupActivity extends BaseActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 //i代表groupPosition,i１代表childPosition,l代表id
+
                 String friendName = contact.get(i).getDetails().get(i1).getUserIp();
+                Log.i(this.getClass().getSimpleName(), "NewFriendGroupActivity is service:" + user.getUser_id());
+                Log.i(this.getClass().getSimpleName(), "NewFriendGroupActivity is service:" + user.getUser_name());
+                Log.i(this.getClass().getSimpleName(), "NewFriendGroupActivity is service:" + friendName);
                 MsgList msgList = new User_DB(NewFriendGroupActivity.this).checkMsgList(user.getUser_id(), friendName);
                 Intent intent = new Intent(NewFriendGroupActivity.this, ChatActivity.class);
                 intent.putExtra("msg_list_id", msgList.getMsg_list_id());

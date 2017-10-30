@@ -120,6 +120,7 @@ public class TwoFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
                 intent.putExtra("user_id", contacts.get(position).getUserIp());
+                intent.putExtra("start_type",1);
 
                 startActivity(intent);
             }
