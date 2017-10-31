@@ -18,6 +18,6 @@
         android:layout_alignTop="@id/adimageview"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="广告倒计时：5秒"
+        android:text="@string/activity_ad_text"
         android:textColor="#ba1616"/>
 </RelativeLayout>

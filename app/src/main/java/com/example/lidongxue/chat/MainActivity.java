@@ -1,7 +1,6 @@
 package com.example.lidongxue.chat;
 
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,12 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.lidongxue.chat.activity.AddFriActivity;
 import com.example.lidongxue.chat.activity.AddFriendActivity;
 import com.example.lidongxue.chat.activity.BaseActivity;
-import com.example.lidongxue.chat.activity.GroupChatActivity;
 import com.example.lidongxue.chat.activity.LoginActivity;
 import com.example.lidongxue.chat.activity.SearchActivity;
 import com.example.lidongxue.chat.adapter.Myadapter;
@@ -32,28 +28,16 @@ import com.example.lidongxue.chat.fragment.FourFragment;
 import com.example.lidongxue.chat.fragment.OneFragment;
 import com.example.lidongxue.chat.fragment.ThreeFragment;
 import com.example.lidongxue.chat.fragment.TwoFragment;
-import com.example.lidongxue.chat.rxbus.RxBus;
-import com.example.lidongxue.chat.rxbus.event.FriendListenerEvent;
 import com.example.lidongxue.chat.service.ConnectionService;
 import com.example.lidongxue.chat.utils.LogUtil;
 import com.example.lidongxue.chat.view.MyViewPager;
 
-import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
-import org.jivesoftware.smackx.muc.DiscussionHistory;
-import org.jivesoftware.smackx.muc.InvitationListener;
-import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.jivesoftware.smackx.muc.MultiUserChatManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity
         implements RadioGroup.OnCheckedChangeListener
@@ -64,7 +48,7 @@ public class MainActivity extends BaseActivity
     private  List<Fragment> fragmentList;
 
     private Subscription subscription;
-    private ConnectionService service;
+    //private ConnectionService service;
     public String requestName = "";//请求的用户
     public int acceptStatus=0;
     private XMPPTCPConnection connection;
@@ -85,9 +69,9 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         LogUtil.d("---Activity生命周期--","onCreate(主程序)");
-        /*if(!isBond){
+        if(!isBond){
             bindService();
-        }*/
+        }
         Log.i(this.getClass().getSimpleName(), "is:"+BaseApp.isBondService);
 
         Log.i(this.getClass().getSimpleName(), "is service:"+BaseApp.service);
@@ -223,22 +207,22 @@ public class MainActivity extends BaseActivity
         bindService(intent,connection1 , BIND_AUTO_CREATE);
 //       为何报错？System.out.println("获得当前登录用户名"+mUser.getUser_name());
         //startService(intent);
-       // startService(intent);
-        RequestListener();
+       startService(intent);
+        // RequestListener();
     }
 
     public ServiceConnection connection1 = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder iBinder) {
             ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
-            service = binder.getService();
-            //BaseApp.serviceobj = binder.getService();
+            //service = binder.getService();
+            BaseApp.service = binder.getService();
             isBond=true;
 
-            Log.d("---bindService(主程序)--","service is connect"+BaseApp.serviceobj);
+            Log.d("---bindService(主程序)--","service is connect"+BaseApp.service);
             //getConnection()会判断是否连接过
-           connection = service.getConnection();
-            //connection= BaseApp.serviceobj.getConnection();
+            //connection = service.getConnection();
+            connection= BaseApp.service.getConnection();
             //service.connection这是开放了该变量的访问权限
 
             Boolean tag=connection.isAuthenticated();
@@ -247,12 +231,12 @@ public class MainActivity extends BaseActivity
                 Log.d("---bindService(主程序)--","未登录");
             }else {
                 //添加好友申请监听
-                service.requestListener();
-                // BaseApp.serviceobj.requestListener();
+                //service.requestListener();
+                 BaseApp.service.requestListener();
                 //添加聊天室邀请监听
-                setGroupInviteListener();
-                mUser = service.getUser();
-                //mUser = BaseApp.serviceobj.getUser();
+                //setGroupInviteListener();
+                //mUser = service.getUser();
+                mUser = BaseApp.service.getUser();
                 Log.d("---getUser(主程序)--",mUser.getUser_name());}
         }
 
@@ -262,7 +246,7 @@ public class MainActivity extends BaseActivity
         }
     };
 
-    private void setGroupInviteListener() {
+    /*private void setGroupInviteListener() {
         MultiUserChatManager
                 .getInstanceFor(connection)
                 .addInvitationListener(new InvitationListener() {
@@ -305,14 +289,14 @@ public class MainActivity extends BaseActivity
                 });
         builder.create().show();
     }
-    /**
+    *//**
      * 加入一个群聊聊天室
      *
      * @param roomName 聊天室名字
      * @param nickName 用户在聊天室中的昵称
      * @param password 聊天室密码
      * @return
-     */
+     *//*
     public MultiUserChat joinChatRoom(String roomName, String nickName, String password) {
 
         try {
@@ -339,9 +323,9 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    /**
+    *//**
      * 观察请求状态
-     */
+     *//*
     public void RequestListener() {
         Log.i("--MainActivity-reqN1-","subscribe-"+requestName);
 
@@ -358,30 +342,30 @@ public class MainActivity extends BaseActivity
                                 Log.i("--MainActivity-reqN3-","subscribe"+requestName);
                                 //收到好友请求
                                // showDialog("好友申请", "账号为" + requestName + "发来一条好友申请");
-                                /*Intent intent = new Intent();
+                                *//*Intent intent = new Intent();
                                 intent.putExtra("acceptStatus",1);
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
-                                sendBroadcast(intent);*/
+                                sendBroadcast(intent);*//*
                                 Log.i("--MainActivity-reqN4-","subscribe"+requestName);
                             } else if ("subscribed".equals(friendListenerEvent.getRequestType())) {
                                 acceptStatus=2;
                                 //通过好友请求
-                                /*Intent intent = new Intent();
+                                *//*Intent intent = new Intent();
                                 intent.putExtra("acceptStatus",2);
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
-                                sendBroadcast(intent);*/
+                                sendBroadcast(intent);*//*
                               //  showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
                                 Log.i("--MainActivity-reqN-","subscribed"+requestName);
                             } else if ("unsubscribed".equals(friendListenerEvent.getRequestType())) {
                                 acceptStatus=3;
                                 //拒绝好友请求
-                               /* Intent intent = new Intent();
+                               *//* Intent intent = new Intent();
                                 intent.putExtra("acceptStatus",3);
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
-                                sendBroadcast(intent);*/
+                                sendBroadcast(intent);*//*
                                // showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
                                 Log.i("--MainActivity-reqN-","unsubscribe"+requestName);
                             }
@@ -406,7 +390,7 @@ public class MainActivity extends BaseActivity
         });
         builder.create().show();
     }
-
+*/
 
     @Override
     protected void onStart() {
@@ -446,9 +430,9 @@ public class MainActivity extends BaseActivity
         /*if (!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }*/
-        /*if(isBond){
+        if(isBond){
             unbindService(connection1);
-        }*/
+        }
 
         super.onDestroy();
         LogUtil.d("---Activity生命周期--","onDestroy(主程序)");

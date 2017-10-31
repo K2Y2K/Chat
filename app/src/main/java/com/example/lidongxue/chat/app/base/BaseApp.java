@@ -2,17 +2,13 @@ package com.example.lidongxue.chat.app.base;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import com.example.lidongxue.chat.activity.LoginActivity;
 import com.example.lidongxue.chat.service.ConnectionService;
 
 import java.util.LinkedList;
@@ -48,7 +44,7 @@ public class BaseApp extends Application {
         mMainThreadId = android.os.Process.myTid();
         mHandler = new Handler();
         Log.i(this.getClass().getSimpleName(),"onCreate()");
-        bindService();
+        //bindService();
 
     }
 
@@ -76,7 +72,7 @@ public class BaseApp extends Application {
         Log.i(this.getClass().getSimpleName(),"onTerminate()");
     }
 
-    public void bindService() {
+   /* public void bindService() {
         //开启服务获得与服务器的连接
          intent1 = new Intent(this, ConnectionService.class);
         bindService(intent1, connection1, BIND_AUTO_CREATE);
@@ -115,7 +111,7 @@ public class BaseApp extends Application {
         stopService(intent1);
 
     }
-
+*/
     /**
      * 添加Activity
      */

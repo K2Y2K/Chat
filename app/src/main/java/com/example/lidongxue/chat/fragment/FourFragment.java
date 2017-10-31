@@ -158,7 +158,7 @@ public class FourFragment extends Fragment {
                                 //getActivity().unbindService(connection);
                                 BaseApp baseApp=new BaseApp();
                                 baseApp.exit();
-                             getActivity().finish();
+                             //getActivity().finish();
                             Intent intent = new Intent(getActivity(), LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);

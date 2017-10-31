@@ -72,6 +72,7 @@
 
     <string name="exit">退出</string>
     <string name="user_no_found">该用户不存在</string>
+    <string name="activity_ad_text">广告倒计时：5秒</string>
 
 
 </resources>
