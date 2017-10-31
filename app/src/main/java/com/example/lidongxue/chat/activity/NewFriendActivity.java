@@ -1,11 +1,7 @@
 package com.example.lidongxue.chat.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,12 +9,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lidongxue.chat.R;
-import com.example.lidongxue.chat.adapter.NewFriendAdapter;
-import com.example.lidongxue.chat.adapter.NewFriendAdapter.Callback;
+import com.example.lidongxue.chat.adapter.NewFriendAdapter1;
 import com.example.lidongxue.chat.broadcast.MyReceiverAddFri;
+import com.example.lidongxue.chat.database.User_DB;
+import com.example.lidongxue.chat.entity.Contact;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,27 +27,33 @@ import butterknife.ButterKnife;
  */
 
 public class NewFriendActivity extends BaseActivity implements AdapterView.OnItemClickListener
-,Callback{
+{
     private MyReceiverAddFri receiver1;
-    private static  MyReceiver receiver;
+    //private static  MyReceiver receiver;
     public static String response;
     public static int acceptStatus;
     public static Handler handler;
     public static final String RECEIVER_USER="com.example.lidongxue.chat.newFriendActivity";
     private  ArrayList<HashMap<String, Object>> listItems;   //存放文字、图片信息
    // private SimpleAdapter listItemAdapter;                  //适配器
-    private NewFriendAdapter listItemBaseAdapter1;
+    private NewFriendAdapter1 adapter;
    /* @BindView(R.id.search_new_user)
     SearchView msearch_new_user;*/
     @BindView(R.id.search_newfriend_match)
     ListView msearch_newfriend_match;
     // Handler handler;
+    List<Contact> contacts_list;
+    Contact contact_status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newfriend_note);
         ButterKnife.bind(this);
         initToolBar(true,"新朋友");
+
+        getContactList();
+
+
         /*//动态注册广播
         receiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -68,7 +72,8 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
         Log.i("--NewFriendActivity--","onCreate");
         listItems = new ArrayList<HashMap<String, Object>>();
 
-        handler=new Handler(){
+      /* 用handler不能解决问题
+       handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 //super.handleMessage(msg);
@@ -84,7 +89,7 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                             listItems, NewFriendActivity.this);
                     msearch_newfriend_match.setAdapter(listItemBaseAdapter1);
                     msearch_newfriend_match.setOnItemClickListener(NewFriendActivity.this);
-                    /*
+                    *//*
                     //生成适配器的Item和动态数组对应的元素
                     listItemAdapter = new SimpleAdapter(NewFriendActivity.this,listItems,//数据源
                             R.layout.list_item_1,//ListItem的XML布局实现
@@ -94,7 +99,7 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                             new int[] {R.id.newfriend_title,R.id.newfriend_receiver_btn}
                     );
                     NewFriendActivity.this.setListAdapter(listItemAdapter);
-                   */
+                   *//*
                 }else  if(msg.what==0x12){
                     map.put("ItemTitle", response);     //文字
                     map.put("ItemStatus","已添加");
@@ -134,7 +139,15 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
         };
       //使用静态广播
         receiver = new MyReceiver();
+*/
+    }
 
+    private void getContactList() {
+        User_DB dbHelper = new User_DB(this);
+        contacts_list = dbHelper.getContactAll();
+        adapter = new NewFriendAdapter1(this,contacts_list);
+        msearch_newfriend_match.setAdapter(adapter);
+        //msearch_newfriend_match.setOnItemClickListener(this);
     }
 
     @Override
@@ -157,6 +170,7 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
           Toast.LENGTH_SHORT).show();
     }
 
+    /*//该方法是重写NewFriendAdapter
     @Override
     public void onClick(View item, View widget, int position, int which){
         switch (which){
@@ -175,7 +189,7 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                 break;
         }
 
-    }
+    }*/
    /* @Override
     public void onClick(View v) {
         Toast.makeText(
@@ -184,6 +198,9 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
                      + listItems.get((Integer) v.getTag()),
                 Toast.LENGTH_SHORT).show();
     }*/
+   /*
+   * 内部广播　用handler传值时　　该activity　必须运行，否则提示handler对象为空　报错，so广播接收值处理添加好友的状态不可取
+   * *//*
    //内部静态广播　要在class前加上staitc　否则抛出异常
     public static class MyReceiver extends BroadcastReceiver {
 
@@ -224,6 +241,6 @@ public class NewFriendActivity extends BaseActivity implements AdapterView.OnIte
 
             }
         }
-    }
+    }*/
 }
 

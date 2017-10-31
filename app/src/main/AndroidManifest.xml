@@ -22,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".adActivity">
+
+        </activity>
 
         <activity android:name=".activity.BaseActivity"
           />
@@ -41,17 +44,18 @@
         <activity android:name=".activity.UserInfoActivity"/>
         <activity android:name=".activity.ChatActivity"/>
         <activity android:name=".activity.NewFriendGroupActivity"/>
+        <activity android:name=".activity.DiscoveryActivity"/>
 
-        <receiver android:name=".activity.NewFriendActivity$MyReceiver"
+       <!-- <receiver android:name=".activity.NewFriendActivity$MyReceiver"
             android:enabled="true"
             android:exported="true">
-            <!-- 静态注册广播 -->
-            <!-- intent过滤器,指定可以匹配哪些intent, 一般需要定义action 可以是自定义的也可是系统的 -->
+            &lt;!&ndash; 静态注册广播 &ndash;&gt;
+            &lt;!&ndash; intent过滤器,指定可以匹配哪些intent, 一般需要定义action 可以是自定义的也可是系统的 &ndash;&gt;
             <intent-filter>
-                <!--action-->
+                &lt;!&ndash;action&ndash;&gt;
                 <action android:name="com.example.lidongxue.chat.newFriendActivity" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
         <!--<receiver android:name=".broadcast.MyReceiverAddFri"
             android:enabled="true"
             android:exported="true">

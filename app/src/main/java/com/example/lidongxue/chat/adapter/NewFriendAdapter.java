@@ -28,6 +28,7 @@ public class NewFriendAdapter extends BaseAdapter {
     private final int VIEW_TYPE = 2;
     private final int TYPE_1 = 0;
     private final int TYPE_2 = 1;
+
     /**
          * 自定义接口，用于回调按钮点击事件到Activity
          *

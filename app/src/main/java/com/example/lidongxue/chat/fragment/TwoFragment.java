@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.activity.NewFriendActivity;
 import com.example.lidongxue.chat.activity.NewFriendGroupActivity;
@@ -22,6 +21,8 @@ import com.example.lidongxue.chat.adapter.ContactsAdapter;
 import com.example.lidongxue.chat.app.base.BaseApp;
 import com.example.lidongxue.chat.entity.User;
 import com.example.lidongxue.chat.entity.bean.UserBean;
+import com.example.lidongxue.chat.rxbus.RxBus;
+import com.example.lidongxue.chat.rxbus.event.FriendListenerEvent;
 import com.example.lidongxue.chat.service.ConnectionService;
 import com.example.lidongxue.chat.widget.CustomDialog;
 
@@ -29,6 +30,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by lidongxue on 17-9-26.
@@ -58,6 +62,9 @@ public class TwoFragment extends Fragment {
     Intent intent;
     private View rootView1;
 
+    public String requestName = "";//请求的用户
+    public int acceptStatus=0;
+    private Subscription subscription;
 
     @Nullable
     @Override
@@ -67,7 +74,6 @@ public class TwoFragment extends Fragment {
        // bind();
         rootView1 = inflater.inflate(R.layout.header_rv_contacts, container, false);
         ButterKnife.bind(this, rootView1);
-
         return rootView1;
     }
 
@@ -76,8 +82,11 @@ public class TwoFragment extends Fragment {
         super.onResume();
         Log.i(this.getClass().getSimpleName(), "is:"+BaseApp.isBondService);
         Log.i(this.getClass().getSimpleName(), "is service:"+BaseApp.service);
+        Log.i(this.getClass().getSimpleName(), "is serviceobj:"+BaseApp.serviceobj);
         if(BaseApp.service!=null){
+            RequestListener();
             initView(rootView1);
+
         }
 
     }
@@ -89,8 +98,9 @@ public class TwoFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), NewFriendActivity.class);
-                intent.putExtra("request", ((MainActivity) getActivity()).getRequestName());
+                /*intent.putExtra("request", ((MainActivity) getActivity()).getRequestName());
                 intent.putExtra("acceptstatus", ((MainActivity) getActivity()).getAcceptStatus());
+                mtvNewFriendUnread.setVisibility(View.GONE);*/
                 mtvNewFriendUnread.setVisibility(View.GONE);
                 startActivity(intent);
             }
@@ -99,9 +109,9 @@ public class TwoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), NewFriendGroupActivity.class);
-                intent.putExtra("request", ((MainActivity) getActivity()).getRequestName());
+                /*intent.putExtra("request", ((MainActivity) getActivity()).getRequestName());
                 intent.putExtra("acceptstatus", ((MainActivity) getActivity()).getAcceptStatus());
-                mtvNewFriendUnread.setVisibility(View.GONE);
+                mtvNewFriendUnread.setVisibility(View.GONE);*/
                 startActivity(intent);
 
             }
@@ -127,6 +137,42 @@ public class TwoFragment extends Fragment {
         });
 
 
+    }
+    /**
+     * 观察请求状态
+     */
+    public void RequestListener() {
+        Log.i("--twofragment-reqN1-","");
+
+        subscription = RxBus.getInstance().toObserverable(FriendListenerEvent.class).
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<FriendListenerEvent>() {
+                    @Override
+                    public void call(FriendListenerEvent friendListenerEvent) {
+                        requestName = friendListenerEvent.getRequestName();
+                        Log.i("--twofragment-reqN2-","subscribe"+requestName);
+                        Log.i("--twofragment-reqN2-","subscribegetReciverClass():"+friendListenerEvent.getReciverClass());
+                        if ("MainActivity".equals(friendListenerEvent.getReciverClass())) {
+                            if ("subscribe".equals(friendListenerEvent.getRequestType())) {
+                                Log.i("--twofragment-reqN3-","subscribe"+requestName);
+                                //收到好友请求
+                                mtvNewFriendUnread.setVisibility(View.VISIBLE);
+
+                                Log.i("--twofragment-reqN4-","subscribe"+requestName);
+                            } else if ("subscribed".equals(friendListenerEvent.getRequestType())) {
+                                acceptStatus=2;
+                                //通过好友请求
+                                //  showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
+                                Log.i("--twofragment-reqN-","subscribed"+requestName);
+                            } else if ("unsubscribed".equals(friendListenerEvent.getRequestType())) {
+                                acceptStatus=3;
+                                //拒绝好友请求
+                                // showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
+                                Log.i("--twofragment-reqN-","unsubscribe"+requestName);
+                            }
+                        }
+                    }
+                });
     }
 
 

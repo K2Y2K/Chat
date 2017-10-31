@@ -6,6 +6,7 @@ import com.example.lidongxue.chataidl.User;
 import com.example.lidongxue.chataidl.Msg;
 import com.example.lidongxue.chataidl.MsgList;
 import com.example.lidongxue.chataidl.Contact;
+import com.example.lidongxue.chataidl.UserPic;
 interface IMyAidlInterface {
     /**
      * Demonstrates some basic types that you can use as parameters
@@ -23,4 +24,10 @@ interface IMyAidlInterface {
             List<Msg> getMsgList(String msg_list_id);
             List<MsgList> getMsgsList(String userid);
             List<Contact> getContactList(String userid);
+
+             List<UserPic> getUserPicAllList();
+
+            List<UserPic> getUserPicList(String userid);
+            void addUserPic(in UserPic userpic);
+
 }

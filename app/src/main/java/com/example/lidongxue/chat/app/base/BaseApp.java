@@ -34,6 +34,8 @@ public class BaseApp extends Application {
     private static Handler mHandler;//主线程Handler
     public static ConnectionService service;
     public static boolean isBondService=false;
+    Intent intent1;
+    public static ConnectionService serviceobj;
 
 
     @Override
@@ -76,9 +78,10 @@ public class BaseApp extends Application {
 
     public void bindService() {
         //开启服务获得与服务器的连接
-        Intent intent = new Intent(this, ConnectionService.class);
-        bindService(intent, connection1, BIND_AUTO_CREATE);
-        startService(intent);
+         intent1 = new Intent(this, ConnectionService.class);
+        bindService(intent1, connection1, BIND_AUTO_CREATE);
+        startService(intent1);
+
     }
     public  ServiceConnection connection1 = new ServiceConnection() {
         @Override
@@ -94,7 +97,7 @@ public class BaseApp extends Application {
                 Log.d(this.getClass().getSimpleName(),"未登录");
             }
             //添加好友申请监听
-            service.requestListener();
+           // service.requestListener();
             Log.i(this.getClass().getSimpleName(),"添加好友申请监听zhixing");
 
 
@@ -109,6 +112,7 @@ public class BaseApp extends Application {
 
     public void  unbindservice(){
         unbindService(connection1);
+        stopService(intent1);
 
     }
 
@@ -143,13 +147,13 @@ public class BaseApp extends Application {
 
     /**
      * 完全退出  销毁所有的Activity
-     * 一般用于“退出程序”功能
+     * 一般用于“退出程序”功能t
      */
     public void exit() {
         for (Activity activity : activities) {
             activity.finish();
         }
-
+        //unbindservice();
     }
 
     /**

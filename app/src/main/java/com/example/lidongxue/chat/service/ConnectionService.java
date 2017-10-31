@@ -242,7 +242,7 @@ public class ConnectionService extends Service {
             public void processMessage(Chat chat, Message message) {
                 //当消息返回为空的时候，表示用户正在聊天窗口编辑信息并未发出消息
                 if (!TextUtils.isEmpty(message.getBody())) {
-                    LogUtil.d("TAG", "message.getBody() is:"+message.getBody());
+                    LogUtil.d("TAG", "initListener() message.getBody() is:"+message.getBody());
                     try {
                         JSONObject object = new JSONObject(message.getBody());
                         String type = object.getString("type");
@@ -251,6 +251,7 @@ public class ConnectionService extends Service {
                         LogUtil.d("TAG", "data is:" +data);
                         message.setFrom(message.getFrom().split("/")[0]);
                         message.setBody(data);
+                        LogUtil.d("TAG", "initListener() data is:" +message.getBody(data)+"; message.getFrom() is"+message.getFrom());
                         dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data,  getDate() + "", message.getFrom(), 2);
                         RxBus.getInstance().post(message);
                     } catch (JSONException e) {
@@ -348,7 +349,7 @@ public class ConnectionService extends Service {
                         UserCache.save(userName + "@127.0.0.1", password);
                         getOfflineMessage();//一上线获取离线消息
                         initListener();//登录成功开启消息监听
-                        //requestListener();//登录开启好友信息监听
+                        requestListener();//登录开启好友信息监听
                         RxBus.getInstance().post(new HandleEvent("LoginActivity", true));
 
                     } catch (Exception e) {
@@ -368,13 +369,21 @@ public class ConnectionService extends Service {
         OfflineMessageManager offlineManager = new OfflineMessageManager(connection);
         try {
             List<Message> list = offlineManager.getMessages();
+            LogUtil.d("TAG", "getOfflineMessage() message.getBody() is:"+list);
             for (Message message : list) {
                 message.setFrom(message.getFrom().split("/")[0]);
                 JSONObject object = new JSONObject(message.getBody());
                 String type = object.getString("type");
                 String data = object.getString("data");
+
+
+                message.setBody(data);
+                LogUtil.d("TAG", "getOfflineMessage() message.getBody() is:"+user.getUser_id()+";"+
+                        message.getFrom()+"; data"+data+";"+type+";");
                 //保存离线信息
-                dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, System.currentTimeMillis() + "", message.getFrom(), 2);
+                //dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, System.currentTimeMillis() + "", message.getFrom(), 2);
+                dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, getDate() + "", message.getFrom(), 2);
+                RxBus.getInstance().post(message);
             }
             //删除离线消息
             offlineManager.deleteMessages();
@@ -493,7 +502,7 @@ public class ConnectionService extends Service {
         System.out.println("查询开始..............." + connection.getHost()
                 +"  "+ connection.getServiceName());
         UserSearchManager usm = new UserSearchManager(connection);
-        Form searchForm = usm.getSearchForm("search.10.10.11.109");
+        Form searchForm = usm.getSearchForm("search.127.0.0.1");
         Form answerForm = searchForm.createAnswerForm();
         answerForm.setAnswer("Username", true);
         answerForm.setAnswer("search", userName1);
@@ -552,8 +561,12 @@ public class ConnectionService extends Service {
         try {
             Roster roster = Roster.getInstanceFor(connection);
            // .createEntry(account + "@" + SERVER_IP, "", groupName);
-            roster.createEntry(account.trim() + "@" + SERVER_IP1, nickName, null);
             Log.e("TAG", account + "@" + SERVER_IP1 + "/smack");
+            roster.createEntry(account.trim() + "@" + SERVER_IP1, nickName, null);
+            dbHelper.setContact(user.getUser_name().split("@")[0],account,1,0,0,0,getDate());//插入数据库
+
+            Log.e("TAG", user.getUser_name().split("@")[0] + ":申请者;" + account+ ":to_name;");
+
             /*Presence presence = new Presence(Presence.Type.subscribe);
             presence.setTo(account.trim() + "@" + SERVER_IP);
            // presence.setFrom();
@@ -600,25 +613,37 @@ public class ConnectionService extends Service {
             public void processPacket(Stanza packet) {
                 Presence p = (Presence) packet;
                // DiscoverInfo p = (DiscoverInfo) packet;
-                Log.e("TAG", "-1-" + p.getFrom() + "--" + p.getType());
+                Log.e("TAG", "-1-" + p.getFrom() + "--" + p.getType());//22@127.0.0.1/Smack
                 Log.e("TAG", "-1a-" + p.getTo() + "--" + p.getType());
+                String getfrom=p.getFrom().split("@")[0];
+                String getto=p.getTo().split("@")[0];
+                Log.e("TAG", "-1aa-" + getfrom+ "--" + getto);
                 //Presence.Type.subscribe
                 if (p.getType().toString().equals("subscribe")) {
+                    //添加好友申请
                     Log.e("TAG", "-2-" + p.getFrom() + "--" + p.getType());
                     Log.e("TAG", "-2a-" + p.getTo() + "--" + p.getType());
+                    dbHelper.setContact(getfrom, getto,1,0,0,0,getDate());
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribe", "MainActivity"));
                     Log.e("TAG", "-22-" + p.getFrom() + "--" + p.getType());
 
                 } else if (p.getType().toString().equals("subscribed")) {
+                    //接收好友申请 对方接受了自己的好友申请
                     Log.e("TAG", "-3-" + p.getFrom() + "--" + p.getType());
                     Log.e("TAG", "-3a-" + p.getTo() + "--" + p.getType());
+                    dbHelper.updateContact(getto, getfrom,1,1,0,0,getDate());
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "subscribed", "MainActivity"));
                 } else if (p.getType().toString().equals("unsubscribe")) {
+                    //提出删除好友申请
                     Log.e("TAG", "-4-" + p.getFrom() + "--" + p.getType());
                     Log.e("TAG", "-4a-" + p.getTo() + "--" + p.getType());
+                    dbHelper.updateContact(getfrom, getto,1,1,1,0,getDate());//这样做有点不好　覆盖了状态值
                     RxBus.getInstance().post(new FriendListenerEvent(p.getFrom(), "unsubscribe", "MainActivity"));
                 }
                 else if (p.getType().equals(Presence.Type.unsubscribed)){
+                    dbHelper.updateContact(getto, getfrom,1,0,0,1,getDate());
+                    //拒绝添加对方为好友
+                    System.out.println("unsubscribed!");
                 } else if (p.getType().equals(Presence.Type.unavailable)) {
                     System.out.println("好友下线！");
                 } else {
@@ -635,10 +660,13 @@ public class ConnectionService extends Service {
      * @param userId 用户id
      */
     public void refuse(String userId) {
-        Presence presence = new Presence(Presence.Type.unsubscribe);
-        presence.setTo(userId);
+        Log.e("TAG", "-refuse()-" +userId);
+        String user_id=userId+"@"+SERVER_IP1;
+        Presence presence = new Presence(Presence.Type.unsubscribed);
+        presence.setTo(user_id);
         try {
             connection.sendStanza(presence);
+            dbHelper.updateContact(userId,user.getUser_name().split("@")[0] ,1,0,0,1,getDate());
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
@@ -651,10 +679,15 @@ public class ConnectionService extends Service {
      * @param userId 用户id
      */
     public void accept(String userId) {
+        Log.e("TAG", "-accept()-" +userId);
+        String user_id=userId+"@"+SERVER_IP1;
+        Log.e("TAG", "-accept()-" +user_id);
         Presence presence = new Presence(Presence.Type.subscribed);
-        presence.setTo(userId);
+        presence.setTo(user_id);
         try {
             connection.sendStanza(presence);
+            dbHelper.updateContact(userId,user.getUser_name().split("@")[0] ,1,1,0,0,getDate());
+            Log.e("TAG", "-accept()-" +user_id+";"+user.getUser_name().split("@")[0]);
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }

@@ -21,7 +21,8 @@ import java.util.List;
 public class ChatAdapter extends BaseAdapter {
     private static final String TAG = "---ChatAdapter---" ;
     private  final int SELF_MSG = 1;//自己发送的消息
-    private   final int FRIENDS_MSG = 2;//收到对方的消息
+    //收到对方的消息返回该值　 赋值为２时会出错，说数组越界　FRIENDS_MSG只是标志收到对方消息时使用如下布局；
+    private   final int FRIENDS_MSG = 0;
     private static final int ITEMCOUNT = 2;// 消息类型的总数
     private List<Msg> msgList;
     private LayoutInflater inflater;

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.lidongxue.chat.entity.Contact;
 import com.example.lidongxue.chat.entity.Msg;
 import com.example.lidongxue.chat.entity.MsgList;
 import com.example.lidongxue.chat.entity.User;
@@ -42,6 +43,8 @@ public class User_DB {
         }
         return user;
     }
+
+
     /**
      * 登录后插入用户
      *
@@ -63,6 +66,87 @@ public class User_DB {
             return user;
         }
     }
+    /*
+    * 获取添加好友信息
+    * */
+    public Contact getContact(String from_name, String to_name){
+        Contact contact=null;
+        Cursor cursor = db.rawQuery("select * from add_contact where from_name=? and to_name=?", new String[]{from_name,to_name});
+        if (cursor.moveToNext()) {
+            int contact_id = cursor.getInt(cursor.getColumnIndex("add_contact_id"));
+            String from_name1 = cursor.getString(cursor.getColumnIndex("from_name"));
+            String to_name1 = cursor.getString(cursor.getColumnIndex("to_name"));
+            int sub =cursor.getInt(cursor.getColumnIndex("sub"));
+            int subed =cursor.getInt(cursor.getColumnIndex("subed"));
+            int unsub =cursor.getInt(cursor.getColumnIndex("unsub"));
+            int unsubed =cursor.getInt(cursor.getColumnIndex("unsubed"));
+            String sub_time = cursor.getString(cursor.getColumnIndex("sub_time"));
+            contact = new Contact(contact_id ,from_name1,to_name1,sub,subed,unsub,unsubed,sub_time);
+        }
+        return contact;
+    }
+
+    /*
+    * 添加好友信息
+    * */
+    public Contact setContact(String from_name, String to_name,int sub,int subed,int unsub,int unsubed,String sub_time){
+        Contact contact=getContact(from_name,to_name);
+        if(contact==null){
+            ContentValues values = new ContentValues();
+            values.put("from_name", from_name);
+            values.put("to_name", to_name);
+            values.put("sub", sub);
+            values.put("subed", subed);
+            values.put("unsub", unsub);
+           // values.put("unsubed", unsubed);
+            values.put("sub_time", sub_time);
+            db.insert("add_contact", null, values);
+            contact = getContact(from_name,to_name);
+            return contact;
+        }
+        Cursor cursor=db.rawQuery("select * from add_contact",null);
+        for(int i=0;i<8;i++) {
+            Log.d("lwx", "" + cursor.getColumnName(i));
+        }
+            return contact;
+    }
+    /*
+    * 更新添加好友状态信息
+    * */
+
+    public boolean updateContact(String from_name, String to_name,int sub,int subed,int unsub,int unsubed,String sub_time){
+        ContentValues values = new ContentValues();
+        values.put("sub", sub);
+        values.put("subed", subed);
+        values.put("unsub", unsub);
+        values.put("unsubed", unsubed);
+        values.put("sub_time", sub_time);
+        db.update("add_contact", values, "from_name=? and to_name=?", new String[]{from_name, to_name });
+        return true;
+    }
+    //获取新朋友状态
+    public List<Contact> getContactAll(){
+        List<Contact> contact_list = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from add_contact order by sub_time desc",
+                new String[]{});
+        if(cursor!=null){
+            while (cursor.moveToNext()) {
+                int addcontact_id = cursor.getInt(cursor.getColumnIndex("add_contact_id"));
+                String from_name = cursor.getString(cursor.getColumnIndex("from_name"));
+                String to_name = cursor.getString(cursor.getColumnIndex("to_name"));
+                int sub = cursor.getInt(cursor.getColumnIndex("sub"));
+                int subed = cursor.getInt(cursor.getColumnIndex("subed"));
+                int unsub = cursor.getInt(cursor.getColumnIndex("unsub"));
+                int unsubed = cursor.getInt(cursor.getColumnIndex("unsubed"));
+                String sub_time = cursor.getString(cursor.getColumnIndex("sub_time"));
+                Contact contact=new Contact(addcontact_id,from_name,to_name,sub,subed,unsub,unsubed,sub_time);
+                contact_list.add(contact);
+            }
+            return contact_list;
+        }else {
+        return null;
+    }
+    }
     /**
      * 获取聊天列表
      *
@@ -71,7 +155,9 @@ public class User_DB {
      */
     public List<MsgList> getMsgAllList(int userId) {
         List<MsgList> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from msg_list where user_id=?", new String[]{userId + ""});
+        //按聊天时间顺序　倒排序
+        Cursor cursor = db.rawQuery("select * from msg_list where user_id=? order by last_msg_time desc",
+                new String[]{userId + ""});
         while (cursor.moveToNext()) {
             int msg_list_id = cursor.getInt(cursor.getColumnIndex("msg_list_id"));
             int user_id = cursor.getInt(cursor.getColumnIndex("user_id"));

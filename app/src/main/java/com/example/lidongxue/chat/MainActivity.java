@@ -232,10 +232,13 @@ public class MainActivity extends BaseActivity
         public void onServiceConnected(ComponentName name, IBinder iBinder) {
             ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) iBinder;
             service = binder.getService();
+            //BaseApp.serviceobj = binder.getService();
             isBond=true;
-            Log.d("---bindService(主程序)--","service is connect");
+
+            Log.d("---bindService(主程序)--","service is connect"+BaseApp.serviceobj);
             //getConnection()会判断是否连接过
            connection = service.getConnection();
+            //connection= BaseApp.serviceobj.getConnection();
             //service.connection这是开放了该变量的访问权限
 
             Boolean tag=connection.isAuthenticated();
@@ -245,9 +248,11 @@ public class MainActivity extends BaseActivity
             }else {
                 //添加好友申请监听
                 service.requestListener();
+                // BaseApp.serviceobj.requestListener();
                 //添加聊天室邀请监听
                 setGroupInviteListener();
                 mUser = service.getUser();
+                //mUser = BaseApp.serviceobj.getUser();
                 Log.d("---getUser(主程序)--",mUser.getUser_name());}
         }
 
@@ -352,14 +357,12 @@ public class MainActivity extends BaseActivity
                                 acceptStatus=1;
                                 Log.i("--MainActivity-reqN3-","subscribe"+requestName);
                                 //收到好友请求
-                                showDialog("好友申请", "账号为" + requestName + "发来一条好友申请");
-
+                               // showDialog("好友申请", "账号为" + requestName + "发来一条好友申请");
                                 /*Intent intent = new Intent();
                                 intent.putExtra("acceptStatus",1);
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
                                 sendBroadcast(intent);*/
-
                                 Log.i("--MainActivity-reqN4-","subscribe"+requestName);
                             } else if ("subscribed".equals(friendListenerEvent.getRequestType())) {
                                 acceptStatus=2;
@@ -369,9 +372,9 @@ public class MainActivity extends BaseActivity
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
                                 sendBroadcast(intent);*/
-                                showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
+                              //  showDialog("通过了好友请求", "账号为" + requestName + "通过了您的好友请求");
                                 Log.i("--MainActivity-reqN-","subscribed"+requestName);
-                            } else if ("unsubscribe".equals(friendListenerEvent.getRequestType())) {
+                            } else if ("unsubscribed".equals(friendListenerEvent.getRequestType())) {
                                 acceptStatus=3;
                                 //拒绝好友请求
                                /* Intent intent = new Intent();
@@ -379,7 +382,7 @@ public class MainActivity extends BaseActivity
                                 intent.putExtra("response", requestName);
                                 intent.setAction(NewFriendActivity.RECEIVER_USER);
                                 sendBroadcast(intent);*/
-                                showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
+                               // showDialog("拒绝了好友请求", "账号为" + requestName + "拒绝了您的好友请求并且将你从列表中移除");
                                 Log.i("--MainActivity-reqN-","unsubscribe"+requestName);
                             }
                         }
@@ -416,7 +419,7 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
         LogUtil.d("---Activity生命周期--","onResume(主程序)");
-        RequestListener();
+       // RequestListener();
     }
     @Override
     protected void onPause() {
@@ -440,12 +443,12 @@ public class MainActivity extends BaseActivity
     }
     @Override
     protected void onDestroy() {
-        if (!subscription.isUnsubscribed()) {
+        /*if (!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
-        }
-        if(isBond){
+        }*/
+        /*if(isBond){
             unbindService(connection1);
-        }
+        }*/
 
         super.onDestroy();
         LogUtil.d("---Activity生命周期--","onDestroy(主程序)");

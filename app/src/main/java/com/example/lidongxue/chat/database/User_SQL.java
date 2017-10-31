@@ -28,6 +28,10 @@ public class User_SQL extends SQLiteOpenHelper {
     final String CREATE_TABLE_MSG=
             "create table msg(msg_id INTEGER primary key autoincrement,msg_list_id  INTEGER,from_name varchar,msg_content varchar,msg_time varchar,msg_type varchar ,from_type INTEGER)";
 
+    //建表注意区分中文和英文下的空格
+    final String CREATE_TABLE_ADD_CONTACT=
+            "create table add_contact(add_contact_id  INTEGER primary key autoincrement,from_name varchar,to_name varchar,sub INTEGER , subed  INTEGER ,unsub INTEGER , unsubed INTEGER ,sub_time varchar);";
+
     public User_SQL(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -43,6 +47,7 @@ public class User_SQL extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TABLE_USER);
         sqLiteDatabase.execSQL(CREATE_TABLE_MSG_LIST);
         sqLiteDatabase.execSQL(CREATE_TABLE_MSG);
+        sqLiteDatabase.execSQL(CREATE_TABLE_ADD_CONTACT);
     }
 
     @Override

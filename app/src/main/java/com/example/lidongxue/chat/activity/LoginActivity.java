@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -138,7 +139,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-                            finish();//跳转后销毁活动
+                            Log.d(getClass().getSimpleName(),"跳转后　后边的finish()方法继续执行");
+                            finish();//跳转后销毁活动　该方法并没有执行
                         } else if (userBean.getReceiveClass().equals("LoginActivity") && !(Boolean) userBean.getMessage()) {
                             if(userBean.getFlag()==1){
                                 Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();

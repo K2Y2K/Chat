@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lidongxue.chat.R;
+import com.example.lidongxue.chat.app.base.BaseApp;
 import com.example.lidongxue.chat.entity.User;
 import com.example.lidongxue.chat.entity.bean.UserBean;
 import com.example.lidongxue.chat.service.ConnectionService;
@@ -51,7 +52,7 @@ public class SearchUserActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         ButterKnife.bind(this);
-        bind();
+       // bind();
         initToolBar(true,"");
        // handleIntent(getIntent())该方法是实现searchview查询结果的显示　
         // 通过Intent传播搜索内容，调用该方法显示doMySearch()的结果；
@@ -109,12 +110,11 @@ public class SearchUserActivity extends BaseActivity {
                             mLlSearch.setVisibility(View.GONE);
 
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }*/
 
-                    Boolean  isUser= service.addFriend(query,null);
+                    Boolean  isUser= BaseApp.service.addFriend(query,null);
                     if(isUser){
                         /*Intent intent0 = new Intent(SearchUserActivity.this, MainActivity.class);
                         //intent0.putExtra("user_info", (Serializable) result_user);
@@ -128,7 +128,6 @@ public class SearchUserActivity extends BaseActivity {
                         intent.setAction(NewFriendActivity.RECEIVER_USER);
                         sendBroadcast(intent);*/
                         Log.e("----suc-searchUser--",query);
-
                     }else{
                         mrlNoResultTip.setVisibility(View.VISIBLE);
                         mLlSearch.setVisibility(View.GONE);
@@ -172,7 +171,6 @@ public class SearchUserActivity extends BaseActivity {
             @Override
             public boolean onQueryTextSubmit(final String query) {
                 System.out.println("选择的是---" + query);
-
 
                 return false;
             }
