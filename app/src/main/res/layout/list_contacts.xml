@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="@dimen/list_contact_item_iv_paddingleft"
         android:src="@drawable/me_press" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingLeft="10dp"
+        android:paddingLeft="@dimen/list_contact_item_iv_paddingleft"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         tools:text="Friends" />
 </LinearLayout>

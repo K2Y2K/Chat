@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
+import com.example.lidongxue.chat.adapter.ContactsAdapter;
+import com.example.lidongxue.chat.app.base.BaseApp;
+import com.example.lidongxue.chat.entity.bean.UserBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +27,8 @@ public class AddFriActivity extends BaseActivity {
     @BindView(R.id.search_match)
     ListView msearch_match;
     private String[] mStrings = {"123", "456", "789"};
+    private List<UserBean.UserBeanDetails> contactss;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +36,11 @@ public class AddFriActivity extends BaseActivity {
         ButterKnife.bind(this);
        /* Toolbar toolbar=initToolBar(true, "");
         toolbar.setTitle("添加朋友");*/
-        initToolBar(true,"添加朋友");
-        msearch_match.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, mStrings));
+        initToolBar(true,"搜索联系人");
+        contactss = BaseApp.service.getAllFriends();
+        //msearch_match.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, mStrings));
 
+        msearch_match.setAdapter(new ContactsAdapter(contactss,this));
         //设置ListView启动过滤
         msearch_match.setTextFilterEnabled(true);
 
@@ -52,7 +60,7 @@ public class AddFriActivity extends BaseActivity {
             public boolean onQueryTextSubmit(String query) {
 
                 System.out.println("选择的是---" + query);
-// 一般实际应用中可在这里做逻辑处理
+              // 一般实际应用中可在这里做逻辑处理
 
                 return false;
             }
@@ -65,9 +73,13 @@ public class AddFriActivity extends BaseActivity {
                 if (newText.isEmpty()) {
                     //
                     msearch_match.clearTextFilter();
+
+
                 } else {
+
                     //使用用户输入内容对lv进行过滤
                     msearch_match.setFilterText(newText);
+
                 }
                 return false;
             }

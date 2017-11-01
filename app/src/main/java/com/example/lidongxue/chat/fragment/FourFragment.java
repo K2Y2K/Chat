@@ -55,7 +55,7 @@ public class FourFragment extends Fragment {
     private User user;
     private View mExitView;
     private CustomDialog mExitDialog;
-    Intent intent;
+    Intent intent;View rootView;
 
 
     @Override
@@ -70,11 +70,18 @@ public class FourFragment extends Fragment {
         System.out.println("－－fourFragment－nCreateView－");
        // bind();
         //return inflater.inflate(R.layout.fragment_me, container, false);
-        View rootView = inflater.inflate(R.layout.fragment_me, container, false);
+         rootView = inflater.inflate(R.layout.fragment_me, container, false);
         ButterKnife.bind(this, rootView);
-        initView(rootView);
+
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView(rootView);
+    }
+
     /**
      * 绑定服务
      */

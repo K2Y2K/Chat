@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="One"
+            android:text="@string/main_act_buttontext_one"
             android:background="#009eff"
             android:textColor="#fff"
             />
@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Two"
+            android:text="@string/main_act_buttontext_two"
             android:background="#009e00"
             android:textColor="#fff"
             />
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Three"
+            android:text="@string/main_act_buttontext_three"
             android:background="#009eff"
             android:textColor="#fff"
             />
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Four"
+            android:text="@string/main_act_buttontext_four"
             android:background="#009e00"
             android:textColor="#fff"
             />
@@ -55,8 +55,8 @@
     <!-- 覆盖在导航按钮上的覆盖层，表示选中项 -->
     <ImageView
         android:id="@+id/imgv_overtab"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/main_act_iv_width"
+        android:layout_height="@dimen/main_act_iv_height"
         android:background="#ff0000"
         android:layout_alignParentBottom="true"
         />
@@ -87,5 +87,4 @@
         android:layout_marginBottom="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </RelativeLayout>

@@ -32,7 +32,7 @@ public class AddFriendActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
         ButterKnife.bind(this);
-        initToolBar(true,"添加朋友");
+        initToolBar(true,getString(R.string.menu_add_one));
         mTvAccount.setText(UserCache.getName() + "");
         mLlSearchUser.setOnClickListener(new View.OnClickListener() {
             @Override

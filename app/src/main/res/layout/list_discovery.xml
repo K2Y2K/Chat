@@ -7,16 +7,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/item_chattext_receive_time_margin"
         android:background="@drawable/shape_notification_bg"
         android:gravity="center"
-        android:paddingBottom="2dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp"
-        android:text="下午 5点"
+        android:paddingBottom="@dimen/item_chattext_receive_time_paddingbottom"
+        android:paddingLeft="@dimen/item_chattext_receive_time_paddingleft"
+        android:paddingRight="@dimen/item_chattext_receive_time_paddingright"
+        android:paddingTop="@dimen/item_chattext_receive_time_paddingtop"
+        android:text="@string/item_chattext_receive_time_text"
         android:textColor="#fff"
-        android:textSize="12sp"/>
+        android:textSize="@dimen/item_chattext_receive_time_textsize"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/dis_head_img"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
 
             android:src="@drawable/me_press" />
@@ -33,27 +33,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="@dimen/list_discovery_ll_marginright"
             android:orientation="vertical"
-            android:paddingLeft="5dp">
+            android:paddingLeft="@dimen/item_chattext_receive_ll_paddingleft">
 
             <TextView
                 android:id="@+id/dis_from_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="我是名字:"
-                android:textSize="10sp" />
+                android:layout_marginTop="@dimen/item_chattext_receive_tv_margintop"
+                android:text="@string/item_chattext_receive_tv_textname"
+                android:textSize="@dimen/item_chattext_receive_tv_textname_textsize"/>
 
 
             <TextView
                 android:id="@+id/dis_pic_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/item_chattext_receive_tv_margintop"
                 android:gravity="center"
-                android:text="我是:"
-                android:textSize="14sp"
+                android:text="@string/item_chattext_receive_tv_textinfo"
+                android:textSize="@dimen/item_chattext_receive_tv_textinfo_textsize"
                 />
             <ImageView
                 android:layout_width="wrap_content"

@@ -29,6 +29,7 @@ public class BaseApp extends Application {
     private static Looper mMainLooper;//循环队列
     private static Handler mHandler;//主线程Handler
     public static ConnectionService service;
+
     public static boolean isBondService=false;
     Intent intent1;
     public static ConnectionService serviceobj;

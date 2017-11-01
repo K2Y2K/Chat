@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/friends_name"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:text="1"
+        android:layout_marginTop="@dimen/list_msg_item_tv_margintop"
+        android:layout_marginRight="@dimen/list_msg_item_tv_marginright"
+        android:text="@string/list_msg_item_tv_name"
         android:gravity="center"
         android:background="@drawable/me_press"/>
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/friends_msg"
-        android:layout_marginTop="5dp"
-        android:text="2"/>
+        android:layout_marginTop="@dimen/list_msg_item_tv_margintop"
+        android:text="@string/list_msg_item_tv_msg"/>
 
 </LinearLayout>

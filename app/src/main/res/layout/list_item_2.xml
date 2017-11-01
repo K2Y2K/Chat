@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/newfriend_title1"
-        android:text="1"
+        android:text="@string/list_item_1_nametext"
         android:layout_gravity="bottom|left"
 
         android:gravity="center"
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/newfriend_receiver_tv"
-        android:layout_marginLeft="200dp"
-        android:text="yijieshou"
+        android:layout_marginLeft="@dimen/list_item_2_tv_marginleft"
+        android:text="@string/list_item_1_info_tiptext"
         android:gravity="center"
         android:layout_gravity="bottom|right"/>
 </LinearLayout>

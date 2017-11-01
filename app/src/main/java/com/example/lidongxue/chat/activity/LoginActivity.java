@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login1);
         ButterKnife.bind(this);
         LogUtil.d("---Activity生命周期--","onCreate(登录)");
-        initToolBar(false, "登录");
+        initToolBar(false, getString(R.string.login_bn));
         login.setOnClickListener(this);
         reg.setOnClickListener(this);
         user = username.getEditText();

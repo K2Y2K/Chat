@@ -14,23 +14,23 @@
             android:id="@+id/ivUserPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/activity_user_info_iv_marginright"
+            android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
             android:src="@mipmap/ic_new_friend" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_info_id"
-        android:text="jjj"
-        android:layout_marginTop="10dp"/>
+        android:text=" "
+        android:layout_marginTop="@dimen/activity_user_info_iv_margintop"/>
 
 
 </LinearLayout>
     <Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_add"
-        android:text="添加到通讯录"
+        android:text="@string/activity_user_info_button_text"
         />
 </LinearLayout>

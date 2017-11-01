@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#ddd"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="@dimen/activity_chat_listview_dividerheight" />
 
 </LinearLayout>

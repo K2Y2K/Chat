@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/option_item_margin_top"
         android:background="@drawable/selector_common_item"
         android:gravity="center_vertical"
-        android:paddingRight="6px"
+        android:paddingLeft="@dimen/fragment_discovery_paddingleft"
         >
         <TextView
             android:layout_width="match_parent"
@@ -20,13 +20,16 @@
             android:id="@+id/show_info"
             android:drawableLeft="@mipmap/ic_friend_circle"
             android:drawablePadding="10dp"
-            android:text="朋友圈"
-            android:textSize="26dp"/>
+            android:text="@string/fragment_discovery_text"
+            android:textSize="@dimen/fragment_discovery_textsize"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ad_time"/>
+        android:id="@+id/ad_time"
+        android:layout_marginTop="@dimen/option_item_margin_top"
+        android:layout_marginLeft="@dimen/fragment_discovery_paddingleft"
+        android:text="@string/fragment_discovery_button_text"/>
 
 
 </LinearLayout>

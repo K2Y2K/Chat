@@ -55,7 +55,7 @@ public class TwoFragment extends Fragment {
 
     private ConnectionService service;
     private List<UserBean> contact;
-    List<UserBean.UserBeanDetails> contacts;
+    private List<UserBean.UserBeanDetails> contacts;
     private User user;
     private View mExitView;
     private CustomDialog mExitDialog;
@@ -84,8 +84,11 @@ public class TwoFragment extends Fragment {
         Log.i(this.getClass().getSimpleName(), "is service:"+BaseApp.service);
         Log.i(this.getClass().getSimpleName(), "is serviceobj:"+BaseApp.serviceobj);
         if(BaseApp.service!=null){
-            RequestListener();
-            initView(rootView1);
+            if(BaseApp.service.getConnection().isAuthenticated()){
+                RequestListener();
+                initView(rootView1);
+            }
+
 
         }
 

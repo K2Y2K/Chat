@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/header_rv_contacts"
+    <!--<include layout="@layout/header_rv_contacts"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/contact_header"/>
@@ -17,8 +17,8 @@
         android:layout_below="@id/contact_header"
        />
 
-   <!-- app:rv_divider_color="@color/line"
-    app:rv_divider_size="1px"-->
+   &lt;!&ndash; app:rv_divider_color="@color/line"
+    app:rv_divider_size="1px"&ndash;&gt;
 
     <com.example.lidongxue.chat.widget.QuickIndexBar
         android:id="@+id/qib"
@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_below="@id/contact_header"/>
-    <!--字母对话框-->
+    &lt;!&ndash;字母对话框&ndash;&gt;
     <TextView
         android:id="@+id/tvLetter"
         android:layout_width="150px"
@@ -37,6 +37,6 @@
         android:text="A"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
 
 </RelativeLayout>

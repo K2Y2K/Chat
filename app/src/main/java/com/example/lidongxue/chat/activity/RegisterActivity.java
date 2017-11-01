@@ -42,7 +42,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-        initToolBar(true, "注册");
+        initToolBar(true, getString(R.string.activity_register_button_text));
 
 
         if(!isBond){

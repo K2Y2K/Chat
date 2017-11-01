@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.activity.ChatActivity;
 import com.example.lidongxue.chat.adapter.MessageAdapter;
@@ -18,11 +19,18 @@ import com.example.lidongxue.chat.app.base.BaseApp;
 import com.example.lidongxue.chat.database.User_DB;
 import com.example.lidongxue.chat.entity.MsgList;
 import com.example.lidongxue.chat.entity.User;
+import com.example.lidongxue.chat.rxbus.RxBus;
 
+import org.jivesoftware.smack.packet.Message;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 
 /**
@@ -33,11 +41,13 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
     @BindView(R.id.msg_list)
     ListView mymsg_list;
     private MessageAdapter adapter;
-    private List<MsgList> msgAllList;
+    private List<MsgList> msgAllList=new ArrayList<>();
     private User user;
 
+    private Subscription subscription;
 
     private View rootView1;
+    private String[][] msg_count;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,14 +64,22 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
     public void onResume() {
         super.onResume();
         if(BaseApp.service!=null){
-            Log.i(this.getClass().getSimpleName(), "onResume()is:"+ BaseApp.isBondService);
-            Log.i(this.getClass().getSimpleName(), "onResume() is service:"+BaseApp.service);
-            user = BaseApp.service.getUser();
-            Log.i(this.getClass().getSimpleName(), "onResume() is service:"+user.getUser_id());
-            Log.i(this.getClass().getSimpleName(), "onResume() is service:"+user.getUser_name());
-            getList(user.getUser_id());
+            if(BaseApp.service.getConnection().isAuthenticated()) {
+                Log.i(this.getClass().getSimpleName(), "onResume()is:" + BaseApp.isBondService);
+                Log.i(this.getClass().getSimpleName(), "onResume() is service:" + BaseApp.service);
+                user = BaseApp.service.getUser();
+                if (user != null) {
+                    Log.i(this.getClass().getSimpleName(), "onResume() is service:" + user.getUser_id());
+                    Log.i(this.getClass().getSimpleName(), "onResume() is service:" + user.getUser_name());
+                    getList(user.getUser_id());
+                    newMsgnote();
+                }
+            }else{
+
+            }
         }
     }
+
 
 
     /**
@@ -70,11 +88,44 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
      * @param userId
      */
     public void getList(int userId) {
+        msgAllList.clear();
         User_DB dbHelper = new User_DB(getActivity());
-        msgAllList = dbHelper.getMsgAllList(userId);
-        adapter = new MessageAdapter(msgAllList, getContext());
-        mymsg_list.setAdapter(adapter);
+        List<MsgList> msgAllList1 = dbHelper.getMsgAllList(userId);
+        if(msgAllList1!=null){
+            msgAllList.addAll(msgAllList1);
+            if(adapter==null){
+                adapter = new MessageAdapter(msgAllList, getContext());
+                mymsg_list.setAdapter(adapter);
+            }else {
+                adapter.notifyDataSetChanged();
+            }
+           // mymsg_list.setSelection(msgAllList.size()-1);
+        }
+
         mymsg_list.setOnItemClickListener(this);
+    }
+    /**
+     * 观察新消息
+     */
+    public void newMsgnote() {
+        Log.i(this.getClass().getSimpleName(), "执行newMsgnote()方法" );
+
+        subscription = RxBus.getInstance().toObserverable(Message.class).
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Message>() {
+                    @Override
+                    public void call(Message message) {
+                        Log.i(this.getClass().getSimpleName(), "newMsgnote()消息message:"+message);
+                        MainActivity ma=new MainActivity();
+                        String logoname="Chat()";
+                        ma.setLogo_name(logoname);
+                        if (message.getFrom()!=null) {
+                            Log.i(this.getClass().getSimpleName(), "newMsgnote()收到新消息:"+message.getFrom());
+                            Log.i(this.getClass().getSimpleName(), "newMsgnote()收到新消息:"+message.getBody());
+                            getList(user.getUser_id());
+                        }
+                    }
+                });
     }
 
     @Override

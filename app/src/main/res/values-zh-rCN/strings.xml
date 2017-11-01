@@ -1,0 +1,103 @@
+<resources>
+    <!--activity_login.xml-->
+    <string name="app_name">Chat</string>
+    <string name="area">国家／地区</string>
+    <string name="login_1_2">中国</string>
+    <string name="login_2_1">账号</string>
+    <string name="login_2_2">QQ号/手机号/邮箱</string>
+    <string name="password">密码</string>
+    <string name="login_3_2">填写密码</string>
+    <string name="login_bn">登　录</string>
+    <string name="login_text_5">新用户</string>
+    <string name="login_leftbottom_text">登录遇到问题?</string>
+    <string name="login_rightbottom_text">使用其他方式登录</string>
+
+    <string name="verification_code">验证码</string>
+    <string name="add_friend">添加朋友</string>
+    <string name="search">搜索</string>
+    <string name="send">发送</string>
+
+    <string name="message">聊天</string>
+    <string name="discovery">朋友圈</string>
+    <string name="me">个人中心</string>
+    <string name="contacts">好友</string>
+
+    <string name="radiobutton1">消息</string>
+    <string name="radiobutton2">好友</string>
+    <string name="radiobutton3">朋友圈</string>
+    <string name="radiobutton4">me</string>
+
+    <string name="menu_add_one">添加朋友</string>
+    <string name="menu_add_two">发起群聊</string>
+
+    <string name="new_friend">新朋友</string>
+    <string name="group_cheat">群聊</string>
+    <string name="group_public_number">公众号</string>
+    <string name="tag">标签</string>
+
+    <string name="alias">备注名</string>
+    <string name="phone_number">手机号</string>
+    <string name="describe">描述</string>
+    <string name="add_picture">附加照片</string>
+
+    <string name="exit_account">退出当前账号</string>
+    <string name="exit_app">关闭Chat</string>
+
+    <string name="album">拍摄</string>
+    <string name="shot">拍摄</string>
+    <string name="location">位置</string>
+
+    <string name="my_chat_account">aaadd</string>
+
+    <string name="red_pack">红包</string>
+    <string name="add_tag_to_classfy_contacts">添加标签对联系人进行分类</string>
+    <string name="add_phone_number">添加电话号码</string>
+    <string name="add_business_card_or_pic">添加名片或相关图片</string>
+    <string name="please_to_talk">按住 说话</string>
+
+    <!--activity_add_friend-->
+    <string name="wechat_qq_phone">微信号／ＱＱ／微博</string>
+    <string name="my_wechat_account">我的微信号:</string>
+    <string name="radar_add_friend">雷达加朋友</string>
+    <string name="add_near_friend">添加身边的朋友</string>
+    <string name="create_group_face_to_face">面对面建群</string>
+    <string name="create_group_with_near_friend">与身边的朋友进入同一个群聊</string>
+    <string name="scan_qr_code_business_card">扫描二维码名片</string>
+    <string name="phone_contacts">手机联系人</string>
+    <string name="add_friend_from_contact">添加或邀请通讯录中的朋友</string>
+    <string name="public_number">公众号</string>
+    <string name="get_more_info_and_service">获取更多资讯和服务</string>
+    <string name="scan_one_scan">扫一扫</string>
+
+
+    <string name="exit">退出</string>
+    <string name="user_no_found">该用户不存在</string>
+    <string name="activity_ad_text">广告倒计时：5秒</string>
+    <string name="activity_chat_button_text">发送</string>
+    <string name="activity_login1_edittext_hint2">密码</string>
+    <string name="activity_login1_edittext_hint1">QQ号/手机号/邮箱</string>
+    <string name="activity_login1_newuser">新用户</string>
+    <string name="activity_my_info_tv1_text">头像</string>
+    <string name="activity_my_info_tv2_text">昵称</string>
+    <string name="activity_register_button_text">注　册</string>
+    <string name="activity_user_info_button_text">添加到通讯录</string>
+    <string name="fragment_discovery_text">朋友圈</string>
+    <string name="fragment_discovery_button_text">计时器</string>
+    <string name="fragment_me_github">github</string>
+    <string name="fragment_me_quit">退出</string>
+    <string name="item_chattext_receive_time_text">下午 5点</string>
+    <string name="item_chattext_receive_tv_textname">我是名字:</string>
+    <string name="item_chattext_receive_tv_textinfo">我是:</string>
+    <string name="list_item_1_btn1_text">接收</string>
+    <string name="list_item_1_btn2_text">拒绝</string>
+    <string name="list_item_1_nametext">3</string>
+    <string name="list_item_1_info_tiptext">yijieshou</string>
+    <string name="list_msg_item_tv_name">1</string>
+    <string name="list_msg_item_tv_msg">2</string>
+    <string name="main_act_buttontext_one">One</string>
+    <string name="main_act_buttontext_two">Two</string>
+    <string name="main_act_buttontext_three">Three</string>
+    <string name="main_act_buttontext_four">Four</string>
+
+
+</resources>

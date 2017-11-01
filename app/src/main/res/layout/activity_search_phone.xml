@@ -7,13 +7,13 @@
     <android.support.v7.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_user">
+        android:id="@+id/search_phoneuser">
 
     </android.support.v7.widget.SearchView>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_match"
+        android:id="@+id/search_phonematch"
         android:layout_weight="1"
         android:dividerHeight="@dimen/activity_chat_listview_dividerheight">
 

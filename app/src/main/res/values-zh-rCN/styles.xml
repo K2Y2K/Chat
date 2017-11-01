@@ -1,0 +1,95 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!--Theme.AppCompat.Light.DarkActionBar带标题栏-->
+    <!--Theme.AppCompat.Light.NoActionBar隐藏标题栏-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--实下滑线样式-->
+    <style name="Line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/line</item>
+    </style>
+    <!--实下滑线样式-->
+    <style name="Line_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/line_1</item>
+    </style>
+    <!--大按钮样式-->
+    <style name="bigButton">
+        <item name="android:textSize">@dimen/bigButtonTextSize</item>
+        <item name="android:textColor">@color/selector_login_btn</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/largePadding</item>
+        <item name="android:paddingRight">@dimen/largePadding</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/normalButtonHeight</item>
+    </style>
+    <style name="bigGreenButton" parent="@style/bigButton">
+        <item name="android:textColor">@color/green_btn_text_color</item>
+        <item name="android:background">@drawable/bg_btn_style_green</item>
+    </style>
+    <style name="bigRegButton" parent="@style/bigButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textColor">@color/green_btn_text_color</item>
+        <item name="android:background">@drawable/bg_btn_style_reg</item>
+    </style>
+
+    <dimen name="bigButtonTextSize">20dip</dimen>
+    <dimen name="largePadding">16dip</dimen>
+    <dimen name="normalButtonHeight">48dip</dimen>
+
+    <!--activity_main1.xml-->
+    <style name="RadioButtonstyle">
+        <!--android:button为null代表不显示radiobutton的形状-->
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/select_rgbn_textcolor</item>
+
+        <item name="android:drawablePadding">5dip</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--toolbar标题文字颜色-->
+    <style name="ToolBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@android:color/white</item><!--右边按钮的颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item><!--文字颜色-->
+    </style>
+    <!-- toolbar弹出菜单样式 -->
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+    </style>
+
+    <!--圆角Dialog-->
+    <style name="MyDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+    </style>
+
+    <!--选项条目样式-->
+    <style name="OptionItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">102px</item>
+        <item name="android:background">@color/white</item>
+    </style>
+</resources>

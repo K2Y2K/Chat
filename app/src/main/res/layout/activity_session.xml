@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar"/>
+   <!-- <include layout="@layout/include_toolbar"/>
 
-    <!--内容-->
+    &lt;!&ndash;内容&ndash;&gt;
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!--<cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        &lt;!&ndash;<cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
-        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>-->
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>&ndash;&gt;
 
         <View
             style="@style/Line"
@@ -112,17 +112,17 @@
         android:layout_height="wrap_content"
         android:minHeight="350px"
         android:visibility="gone">
-        <!--表情-->
+        &lt;!&ndash;表情&ndash;&gt;
         <com.lqr.emoji.EmotionLayout
             android:id="@+id/elEmotion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             />
-        <!--其他功能-->
+        &lt;!&ndash;其他功能&ndash;&gt;
         <include
             android:id="@+id/llMore"
             layout="@layout/include_func_layout"
             android:visibility="gone"/>
-    </FrameLayout>
+    </FrameLayout>-->
 </LinearLayout>

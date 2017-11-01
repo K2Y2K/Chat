@@ -14,14 +14,14 @@
         android:layout_marginTop="@dimen/option_item_margin_top"
         android:background="@drawable/selector_common_item"
         android:gravity="center_vertical"
-        android:paddingRight="6px"
+        android:paddingLeft="@dimen/fragment_discovery_paddingleft"
         >
 
         <ImageView
             android:id="@+id/ivHeader"
-            android:layout_width="140px"
-            android:layout_height="140px"
-            android:layout_marginLeft="30px"
+            android:layout_width="@dimen/fragment_me_iv_width"
+            android:layout_height="@dimen/fragment_me_iv_height"
+            android:layout_marginLeft="@dimen/fragment_me_iv_marginleft"
             android:layout_marginRight="@dimen/option_item_margin_right"
             android:scaleType="centerCrop"
             android:src="@mipmap/default_header"/>
@@ -37,11 +37,11 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6px"
+                android:layout_marginBottom="@dimen/fragment_me_tv_marginbottom"
                 android:singleLine="true"
                 android:text="Lee"
                 android:textColor="@color/gray0"
-                android:textSize="26dp" />
+                android:textSize="@dimen/fragment_me_textsize" />
 
             <!--<TextView
                 android:id="@+id/tvAccount"
@@ -57,8 +57,8 @@
 
         <ImageView
             android:id="@+id/ivQRCordCard"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/fragment_me_iv_width"
+            android:layout_height="@dimen/fragment_me_iv_height"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/option_item_margin_right"
             android:src="@mipmap/ic_qr_code"/>
@@ -71,14 +71,14 @@
         android:layout_marginTop="@dimen/option_item_margin_top"
         android:background="@drawable/selector_common_item"
         android:gravity="center_vertical"
-        android:paddingRight="6px"
+        android:paddingLeft="@dimen/fragment_discovery_paddingleft"
       >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/show_github"
-            android:text="github"
-            android:textSize="26dp"/>
+            android:text="@string/fragment_me_github"
+            android:textSize="@dimen/fragment_me_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/llMyInfo3"
@@ -87,14 +87,14 @@
         android:layout_marginTop="@dimen/option_item_margin_top"
         android:background="@drawable/selector_common_item"
         android:gravity="center_vertical"
-        android:paddingRight="6px"
+        android:paddingLeft="@dimen/fragment_discovery_paddingleft"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/setting"
-            android:text="退出"
-            android:textSize="26dp"/>
+            android:text="@string/fragment_me_quit"
+            android:textSize="@dimen/fragment_me_textsize"/>
     </LinearLayout>
 
     <!--<com.example.lidongxue.chat.view.OptionItemView

@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <!--这个是采取线性布局实现四个按钮块　没有实现相对应的活动-->
-    <include layout="@layout/include_toolbar"/>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpContent"

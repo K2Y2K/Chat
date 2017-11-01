@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.activity.DiscoveryActivity;
-import com.example.lidongxue.chat.adActivity;
+import com.example.lidongxue.chat.activity.TimerActivity;
 import com.example.lidongxue.chat.app.base.BaseApp;
 
 import butterknife.BindView;
@@ -55,7 +55,7 @@ public class ThreeFragment extends Fragment {
         mad_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), adActivity.class);
+                Intent intent = new Intent(getActivity(), TimerActivity.class);
                 startActivity(intent);
             }
         });

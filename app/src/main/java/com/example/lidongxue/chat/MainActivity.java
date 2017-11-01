@@ -56,12 +56,21 @@ public class MainActivity extends BaseActivity
     private boolean isError = false;//标志是否加入聊天室出错
     private Handler handler = new Handler();
     private boolean isBond=false;
+    private Boolean tag;
 
     public String getRequestName() {
         return requestName;
     }
     public int getAcceptStatus(){
         return acceptStatus;
+    }
+
+    public String logo_name="Chat";
+    public void setLogo_name(String logo_name){
+        this.logo_name=logo_name;
+    }
+    public String getLogo_name(){
+        return logo_name;
     }
 
     @Override
@@ -93,7 +102,8 @@ public class MainActivity extends BaseActivity
         // getSupportActionBar().hide();
         /*getSupportActionBar();*/
         Toolbar toolbar=initToolBar(false, "");
-        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitle(getLogo_name());
+
 
 
         //解析控件
@@ -159,7 +169,6 @@ public class MainActivity extends BaseActivity
         MenuInflater infla=new MenuInflater(this);
         infla.inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -422,8 +431,15 @@ public class MainActivity extends BaseActivity
         super.onRestart();
         LogUtil.d("---Activity生命周期--","onRestart(主程序)");
         Log.i(this.getClass().getSimpleName(), "is:"+BaseApp.isBondService);
-
         Log.i(this.getClass().getSimpleName(), "is service:"+BaseApp.service);
+        Log.i(this.getClass().getSimpleName(), "获取一下connection:"+connection);
+        Log.i(this.getClass().getSimpleName(), "是否登录过:"+BaseApp.service.getConnection().isAuthenticated());
+
+
+        if(!connection.isAuthenticated()){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            Log.d("---bindService(主程序)--","未登录");
+        }
     }
     @Override
     protected void onDestroy() {

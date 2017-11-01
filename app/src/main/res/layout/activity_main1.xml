@@ -45,7 +45,7 @@
     </RadioGroup>
 
 
-    <include layout="@layout/include_toolbar"
+    <!--<include layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/app_Bar"
@@ -55,6 +55,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/app_Bar"
+        android:layout_above="@id/main_activity_radio_group"
+        >
+    </com.example.lidongxue.chat.view.MyViewPager>-->
+    <com.example.lidongxue.chat.view.MyViewPager
+        android:id="@+id/main_activity_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
         android:layout_above="@id/main_activity_radio_group"
         >
     </com.example.lidongxue.chat.view.MyViewPager>

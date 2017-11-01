@@ -19,8 +19,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="头像"
-                android:textSize="26dp"
+                android:text="@string/activity_my_info_tv1_text"
+                android:textSize="@dimen/activity_my_info_tv1_textsize"
                 android:gravity="center_horizontal"/>
 
             <ImageView
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="@dimen/activity_my_info_iv_marginleft"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/default_header" />
 
@@ -47,15 +47,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
 
-                android:text="昵称"
-                android:textSize="26dp" />
+                android:text="@string/activity_my_info_tv2_text"
+                android:textSize="@dimen/activity_my_info_tv1_textsize" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2222"
-                android:textSize="26dp"
-                android:layout_marginLeft="100dp"
+                android:text="　"
+                android:textSize="@dimen/activity_my_info_tv1_textsize"
+                android:layout_marginLeft="@dimen/activity_my_info_iv_marginleft"
                 android:layout_gravity="right"
                 android:id="@+id/person_name"/>
 

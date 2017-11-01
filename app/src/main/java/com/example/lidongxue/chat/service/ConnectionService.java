@@ -133,6 +133,7 @@ public class ConnectionService extends Service {
      */
     public XMPPTCPConnection getConnection() {
         try {
+            //connection为空只是表示没有赋值过，即便对象不为空，也不能判断和远程服务连接成功，需要通过connection.isConnected();
             if (connection == null) {
                 XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
                         .setHost(SERVER_IP)//服务器IP地址
@@ -298,6 +299,7 @@ public class ConnectionService extends Service {
 
                 if (!connec) {
                     try {
+                        System.out.println("获取登录状态44 观看一下此时connection是否为空" + connection);//不为空就和主程序里的一致了
                         connection.connect();
                         LogUtil.d("---login(2)--", isConnected());
                         System.out.println("获取登录状态4" + connection.isAuthenticated());

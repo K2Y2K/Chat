@@ -9,24 +9,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
-        android:layout_marginRight="100dp"
+        android:layout_marginRight="@dimen/list_item_1_tv_marginright"
         android:background="@drawable/me_press"
         android:gravity="center"
-        android:text="3" />
+        android:text="@string/list_item_1_nametext" />
 
     <Button
         android:id="@+id/newfriend_receiver_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginRight="20dp"
-        android:text="接收"
+        android:layout_marginRight="@dimen/list_item_1_btn1_marginright"
+        android:text="@string/list_item_1_btn1_text"
         android:visibility="visible"/>
 
     <Button android:id="@+id/newfriend_receiver_nobtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="拒绝"
+        android:text="@string/list_item_1_btn2_text"
         android:layout_gravity="bottom|right"
         android:visibility="visible"/>
 
@@ -34,8 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/newfriend_receiver_tv1"
-        android:layout_marginLeft="100dp"
-        android:text="yijieshou"
+        android:layout_marginLeft="@dimen/list_item_1_tv_marginleft"
+        android:text="@string/list_item_1_info_tiptext"
         android:gravity="center"
         android:layout_gravity="bottom|right"
         android:visibility="gone"/>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/activity_ad1"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"
+        />
+    <Chronometer
+
+        android:id="@+id/ct_timer"
+        android:textColor="@color/red0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView android:id="@+id/adimageview1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ad"
+
+       >
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/adtextview1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/adimageview"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/activity_timer_tv_text"
+        android:textColor="@color/red0"
+        android:visibility="gone"/>
+
+
+</LinearLayout>
