@@ -80,12 +80,12 @@ public class TwoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(this.getClass().getSimpleName(), "is:"+BaseApp.isBondService);
+        Log.i(this.getClass().getSimpleName(), "onResume() ");
         Log.i(this.getClass().getSimpleName(), "is service:"+BaseApp.service);
         Log.i(this.getClass().getSimpleName(), "is serviceobj:"+BaseApp.serviceobj);
         if(BaseApp.service!=null){
             if(BaseApp.service.getConnection().isAuthenticated()){
-                RequestListener();
+               // RequestListener();
                 initView(rootView1);
             }
 
@@ -95,6 +95,7 @@ public class TwoFragment extends Fragment {
     }
 
     private void initView(View rootView) {
+        RequestListener();
         System.out.println("twoFragment_initView()");
         mllNewFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,9 +145,8 @@ public class TwoFragment extends Fragment {
     /**
      * 观察请求状态
      */
-    public void RequestListener() {
-        Log.i("--twofragment-reqN1-","");
-
+    private void RequestListener() {
+        Log.i("--twofragment-reqN1-","RequestListener()");
         subscription = RxBus.getInstance().toObserverable(FriendListenerEvent.class).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<FriendListenerEvent>() {

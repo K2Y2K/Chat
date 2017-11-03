@@ -135,6 +135,9 @@ public class ConnectionService extends Service {
         try {
             //connection为空只是表示没有赋值过，即便对象不为空，也不能判断和远程服务连接成功，需要通过connection.isConnected();
             if (connection == null) {
+
+
+
                 XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
                         .setHost(SERVER_IP)//服务器IP地址
                         //服务器端口
@@ -145,6 +148,7 @@ public class ConnectionService extends Service {
                         .setServiceName(SERVER_NAME)
                         //是否开启安全模式
                         .setSecurityMode(XMPPTCPConnectionConfiguration.SecurityMode.disabled)
+
                         //是否开启压缩
                         .setCompressionEnabled(false)
 
@@ -504,11 +508,11 @@ public class ConnectionService extends Service {
         System.out.println("查询开始..............." + connection.getHost()
                 +"  "+ connection.getServiceName());
         UserSearchManager usm = new UserSearchManager(connection);
-        Form searchForm = usm.getSearchForm("search.127.0.0.1");
+        Form searchForm = usm.getSearchForm(SERVER_NAME);//"search.127.0.0.1"
         Form answerForm = searchForm.createAnswerForm();
         answerForm.setAnswer("Username", true);
         answerForm.setAnswer("search", userName1);
-        ReportedData data = usm.getSearchResults(answerForm, "search.127.0.0.1");
+        ReportedData data = usm.getSearchResults(answerForm, SERVER_NAME);
         Iterator<ReportedData.Row> it = (Iterator<ReportedData.Row>) data.getRows();
         ReportedData.Row row = null;
         User user1 = null;
@@ -517,14 +521,18 @@ public class ConnectionService extends Service {
             user1 = new User();
             row = it.next();
             user1.setUser_name(row.getValues("Username").toString());
-            user1.setUser_name(row.getValues("search").toString());
+           // user1.setUser_name(row.getValues("search").toString());
            // user1.setUser_name(row.getValues("userName").next().toString());
+
             ansS=row.getValues("search").toString()+"\n";
 
           //  System.out.println(row.getValues("userAccount").next());
             System.out.println("---Username--"+row.getValues("Username"));
-            System.out.println("---search--"+row.getValues("search"));
-            System.out.println("---Username--"+ansS);
+            System.out.println("---search1--"+row.getValues("search"));
+            System.out.println("---search2--"+ansS);
+            System.out.println("---name--"+row.getValues("Name"));
+            System.out.println("---email--"+row.getValues("Email"));
+
             results.add(user1);
             // 若存在，则有返回,UserName一定非空，其他两个若是有设，一定非空
         }
@@ -562,7 +570,12 @@ public class ConnectionService extends Service {
         if(isConnected()){
         try {
             Roster roster = Roster.getInstanceFor(connection);
-           // .createEntry(account + "@" + SERVER_IP, "", groupName);
+
+            Log.e("TAG", "修改前roster.getSubscriptionMode()的值:" +  roster.getSubscriptionMode());
+            //设置添加好友模式(manual手动处理)；默认情况是接受所有Roster.SubscriptionMode.accept_all；
+            roster.setSubscriptionMode(Roster.SubscriptionMode.reject_all);
+            Log.e("TAG", "修改后roster.getSubscriptionMode()的值:" +  roster.getSubscriptionMode());
+            // .createEntry(account + "@" + SERVER_IP, "", groupName);
             Log.e("TAG", account + "@" + SERVER_IP1 + "/smack");
             roster.createEntry(account.trim() + "@" + SERVER_IP1, nickName, null);
             dbHelper.setContact(user.getUser_name().split("@")[0],account,1,0,0,0,getDate());//插入数据库
@@ -613,10 +626,12 @@ public class ConnectionService extends Service {
         StanzaListener listener = new StanzaListener() {
             @Override
             public void processPacket(Stanza packet) {
+                if(packet instanceof Presence){
                 Presence p = (Presence) packet;
                // DiscoverInfo p = (DiscoverInfo) packet;
                 Log.e("TAG", "-1-" + p.getFrom() + "--" + p.getType());//22@127.0.0.1/Smack
                 Log.e("TAG", "-1a-" + p.getTo() + "--" + p.getType());
+                //好友监听状态存储的用户名是单纯名字，不带＠的（即JID）。
                 String getfrom=p.getFrom().split("@")[0];
                 String getto=p.getTo().split("@")[0];
                 Log.e("TAG", "-1aa-" + getfrom+ "--" + getto);
@@ -651,9 +666,14 @@ public class ConnectionService extends Service {
                 } else {
                     System.out.println("好友上线！");
                 }
-            }
+            }}
         };
-        connection.addAsyncStanzaListener(listener, filter);
+        //同步监听　一次性无序返回结果；
+       // connection.addAsyncStanzaListener(listener, filter);
+        //异步监听　一个个返回结果；
+        connection.addSyncStanzaListener(listener,filter);
+
+
     }
 
     /**
@@ -687,7 +707,10 @@ public class ConnectionService extends Service {
         Presence presence = new Presence(Presence.Type.subscribed);
         presence.setTo(user_id);
         try {
+            //发送接受添加状态
             connection.sendStanza(presence);
+            //发送添加好友
+            addFriend(user_id,null);
             dbHelper.updateContact(userId,user.getUser_name().split("@")[0] ,1,1,0,0,getDate());
             Log.e("TAG", "-accept()-" +user_id+";"+user.getUser_name().split("@")[0]);
         } catch (SmackException.NotConnectedException e) {

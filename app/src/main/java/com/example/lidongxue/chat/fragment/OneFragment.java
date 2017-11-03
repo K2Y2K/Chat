@@ -43,7 +43,6 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
     private MessageAdapter adapter;
     private List<MsgList> msgAllList=new ArrayList<>();
     private User user;
-
     private Subscription subscription;
 
     private View rootView1;
@@ -71,8 +70,12 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
                 if (user != null) {
                     Log.i(this.getClass().getSimpleName(), "onResume() is service:" + user.getUser_id());
                     Log.i(this.getClass().getSimpleName(), "onResume() is service:" + user.getUser_name());
+
                     getList(user.getUser_id());
                     newMsgnote();
+                    Log.d(getClass().getSimpleName(),"aa:"+msgAllList.toString());
+                    adapter = new MessageAdapter(msgAllList, getContext());
+                    mymsg_list.setSelection(msgAllList.size()-1);
                 }
             }else{
 
@@ -80,26 +83,32 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
         }
     }
 
-
-
     /**
      * 获取消息列表
      *
      * @param userId
      */
     public void getList(int userId) {
-        msgAllList.clear();
+
         User_DB dbHelper = new User_DB(getActivity());
         List<MsgList> msgAllList1 = dbHelper.getMsgAllList(userId);
+        Log.d(getClass().getSimpleName(),"a1:"+msgAllList1.toString());
         if(msgAllList1!=null){
+            Log.d(getClass().getSimpleName(),"getList");
+            msgAllList.clear();
             msgAllList.addAll(msgAllList1);
-            if(adapter==null){
+            /*if(adapter==null){
+                Log.d(getClass().getSimpleName(),"1:"+msgAllList.toString());
                 adapter = new MessageAdapter(msgAllList, getContext());
                 mymsg_list.setAdapter(adapter);
             }else {
+                Log.d(getClass().getSimpleName(),"2:"+msgAllList.toString());
                 adapter.notifyDataSetChanged();
-            }
-           // mymsg_list.setSelection(msgAllList.size()-1);
+            }*/
+            Log.d(getClass().getSimpleName(),"a2:"+msgAllList.toString());
+            adapter = new MessageAdapter(msgAllList, getContext());
+            mymsg_list.setAdapter(adapter);
+            mymsg_list.setSelection(msgAllList.size()-1);
         }
 
         mymsg_list.setOnItemClickListener(this);

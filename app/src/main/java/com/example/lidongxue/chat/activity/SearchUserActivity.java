@@ -98,14 +98,16 @@ public class SearchUserActivity extends BaseActivity {
                 //Boolean  isUser= service.addFriend(query,null,null);
                 if(query!=null) {
                    /* try {
-                        Log.e("----suc-searchUser--",query);
-                        List<User> result_user = service.searchUsers(query);
+                        Log.e(getClass().getSimpleName(),"----执行searchUser()-query："+query);
+                        List<User> result_user = BaseApp.service.searchUsers(query);
+                        Log.e(getClass().getSimpleName(),"----searchUser-result_user：-"+ result_user.toString());
                         if (result_user != null) {
-
+                            Log.e(getClass().getSimpleName(),"----searchUser-result_user不为空");
                             Intent intent0 = new Intent(SearchUserActivity.this, UserInfoActivity.class);
                             intent0.putExtra("user_info", (Serializable) result_user);
                             startActivity(intent0);
                         } else {
+                            Log.e(getClass().getSimpleName(),"----searchUser-result_user为空");
                             mrlNoResultTip.setVisibility(View.VISIBLE);
                             mLlSearch.setVisibility(View.GONE);
 
@@ -116,17 +118,13 @@ public class SearchUserActivity extends BaseActivity {
 
                     Boolean  isUser= BaseApp.service.addFriend(query,null);
                     if(isUser){
-                        /*Intent intent0 = new Intent(SearchUserActivity.this, MainActivity.class);
-                        //intent0.putExtra("user_info", (Serializable) result_user);
-                        intent0.putExtra("user_info", query);
-                        intent0.setAction("com.example.lidongxue.chat.newFriendActivity");
-                        sendBroadcast(intent0);*/
-                       /* //广播没能解决问题
+
+                        //广播没能解决问题
                         Intent intent = new Intent();
                         intent.putExtra("acceptStatus",4);
                         intent.putExtra("response", query);
                         intent.setAction(NewFriendActivity.RECEIVER_USER);
-                        sendBroadcast(intent);*/
+                        sendBroadcast(intent);
                         Log.e("----suc-searchUser--",query);
                     }else{
                         mrlNoResultTip.setVisibility(View.VISIBLE);

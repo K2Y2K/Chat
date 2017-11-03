@@ -2,8 +2,6 @@ package com.example.lidongxue.chat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -33,11 +31,11 @@ public class TimerActivity extends BaseActivity implements  Animation.AnimationL
     Chronometer timer;
     long t=0;
 
-    Handler handler=new Handler(){
+    /*Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             //TextView textView= (TextView) findViewById(R.id.adtextview);//初始化控件
-            /*switch (msg.what){//按时间自动逐秒递减
+            *//*switch (msg.what){//按时间自动逐秒递减
                 case 1:
                     textView.setText("广告倒计时：4秒");
                     break;
@@ -53,12 +51,12 @@ public class TimerActivity extends BaseActivity implements  Animation.AnimationL
                 case 5:
                     textView.setText("广告倒计时：0秒");
                     break;
-            }*/
+            }*//*
             textView.setText("广告倒计时："+msg.what+"秒");
 
             super.handleMessage(msg);
         }
-    };
+    };*/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

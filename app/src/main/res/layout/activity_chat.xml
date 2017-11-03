@@ -10,7 +10,7 @@
         android:layout_weight="1"
         android:id="@+id/chat_view_list"
         android:divider="#ddd"
-        android:dividerHeight="@dimen/activity_chat_listview_dividerheight" />
+        android:dividerHeight="@dimen/activity_chat_listview_dividerheight1" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

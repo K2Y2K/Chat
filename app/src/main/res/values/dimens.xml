@@ -130,6 +130,7 @@
     <dimen name="list_msg_item_tv_marginright">20dp</dimen>
     <dimen name="main_act_iv_width">60dp</dimen>
     <dimen name="main_act_iv_height">50dp</dimen>
+    <dimen name="activity_chat_listview_dividerheight1">1dp</dimen>
 
 
 </resources>
