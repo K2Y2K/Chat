@@ -10,7 +10,7 @@
     android:orientation="horizontal">
 
 
-        <ImageView
+    <ImageView
             android:id="@+id/ivUserPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,6 +26,57 @@
 
 
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lluser_infotype"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/ivUsertype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_user_info_iv_marginright"
+            android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
+            android:text="@string/activity_user_info_text"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_info_type"
+            android:text=" 1"
+            android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
+            />
+
+
+    </LinearLayout>
+   <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lluser_infostatus"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/ivUserstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_user_info_iv_marginright"
+            android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
+            android:text="@string/activity_user_info_status"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_info_status"
+            android:text=" 1"
+            android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
+            />
+
+
+    </LinearLayout>-->
+
     <Button
         android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
         android:layout_width="match_parent"

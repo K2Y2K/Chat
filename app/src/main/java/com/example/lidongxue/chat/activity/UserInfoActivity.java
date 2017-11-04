@@ -35,6 +35,10 @@ public class UserInfoActivity extends BaseActivity {
 
     @BindView(R.id.user_info_id)
     TextView muser_info_id;
+    @BindView(R.id.user_info_type)
+    TextView muser_info_type;
+    /*@BindView(R.id.user_info_status)
+    TextView muser_info_status;*/
     @BindView(R.id.user_add)
     Button muser_add;
     @BindView(R.id.user_delete)
@@ -58,7 +62,7 @@ public class UserInfoActivity extends BaseActivity {
         start_type=bundle.getInt("start_type");
         initToolBar(true,user_contacts_name);
 
-        muser_info_id.setText(user_contacts_name);
+
         if(start_type==1){
             muser_add.setText("发起聊天");
 
@@ -70,6 +74,13 @@ public class UserInfoActivity extends BaseActivity {
             user_info= BaseApp.service.getUserInfo(user_contacts_name);
             Log.i(this.getClass().getSimpleName(), "UserInfoActivity user_info.getUserIp() is service:" + user_info.getUserIp()
             +";user_info.getPickName():"+user_info.getPickName()+";user_info.getStatus():"+user_info.getStatus()+";user_info.getType():"+user_info.getType());
+            muser_info_id.setText(user_info.getUserIp());
+            muser_info_type.setText(user_info.getType().toString());
+           /* if (user_info.getStatus().toString().isEmpty()) {
+                muser_info_status.setText("null");
+            }else{
+            muser_info_status.setText(user_info.getStatus().toString());
+            }*/
             muser_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

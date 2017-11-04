@@ -101,6 +101,8 @@
 
     <string name="activity_timer_tv_text">倒计时：50秒</string>
     <string name="activity_user_info_delete">删除好友</string>
+    <string name="activity_user_info_text">好友关系</string>
+    <string name="activity_user_info_status">好友订阅状态</string>
 
 
 </resources>

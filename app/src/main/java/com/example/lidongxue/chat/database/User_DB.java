@@ -290,7 +290,20 @@ public class User_DB {
         if(msg_list_id!=-1) {
             db.execSQL("delete from msg where msg_list_id=?", new String[]{msg_list_id + ""});
             Log.d("deleteAllMsg 删除所有的消息"," ");
+            updateMsgList(user_id, msg_list_id, null,null);
+            Log.d("deleteAllMsg ","更新删除所有的消息的消息列表 ");
         }
+    }
+    public void deleteMsgList(int user_id,String to_name){
+        int msg_list_id=getMsgListID(user_id,to_name);
+        Log.d("deleteMsgList 查询列表数：","msg_list_id is:"+msg_list_id);
+        if(msg_list_id!=-1) {
+            db.execSQL("delete from msg where msg_list_id=?", new String[]{msg_list_id + ""});
+            Log.d("deleteMsgList 删除所有的消息"," ");
+            db.execSQL("delete from msg_list where msg_list_id=?", new String[]{msg_list_id + ""});
+            Log.d("deleteMsgList ","删除消息列表 ");
+        }
+
     }
     public  int getMsgListID(int user_id,String to_name){
         int msg_list_id=-1;

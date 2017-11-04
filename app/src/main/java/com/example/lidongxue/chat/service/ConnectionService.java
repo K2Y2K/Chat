@@ -617,7 +617,7 @@ public class ConnectionService extends Service {
             roster.removeEntry(entry);
 
             Log.d("deleteFriend()","user.getUser_id():"+user.getUser_id()+"username:"+username);
-            dbHelper.deleteAllMsg(user.getUser_id(),username);
+            dbHelper.deleteMsgList(user.getUser_id(),username);
             return true;
 
         }catch (Exception e){
