@@ -33,4 +33,11 @@
         android:id="@+id/user_add"
         android:text="@string/activity_user_info_button_text"
         />
+    <Button
+        android:layout_marginTop="@dimen/activity_user_info_iv_margintop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_delete"
+        android:text="@string/activity_user_info_delete"
+        />
 </LinearLayout>

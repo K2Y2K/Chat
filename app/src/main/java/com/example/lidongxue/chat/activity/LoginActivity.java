@@ -168,7 +168,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     showSnackBar(v, "请输入密码");
                     return;
                 }
+
                 service.login(username, password);
+
                 break;
             case R.id.reg:
                 startActivity(new Intent(this, RegisterActivity.class));

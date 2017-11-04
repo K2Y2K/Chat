@@ -3,6 +3,7 @@
 
     <item android:drawable="@drawable/shape_reg_send_code_disable" android:state_enabled="false"></item>
     <item android:drawable="@drawable/shape_reg_send_code_enable" android:state_enabled="true"></item>
+    <item android:drawable="@drawable/shape_reg_send_code_press" android:state_pressed="true"  />
     <item android:drawable="@drawable/shape_reg_send_code_enable"></item>
 
 </selector>

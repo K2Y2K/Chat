@@ -101,6 +101,7 @@
 <string name="main_act_buttontext_three">Three</string>
 <string name="main_act_buttontext_four">Four</string>
     <string name="activity_timer_tv_text">倒计时：50秒</string>
+    <string name="activity_user_info_delete">Delete Contacts</string>
 
 
 </resources>

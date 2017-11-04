@@ -53,7 +53,7 @@ public class ContactsAdapter extends BaseAdapter {
             view=mInflater.inflate(R.layout.list_contacts,parent, false);
             //holder.contacts_pic=view.findViewById(R.id.contacts_pic);
         holder.contacts_name=view.findViewById(R.id.contacts_name);
-        holder.contacts_name.setText(mmcontacts.get(position).getUserIp());
+        holder.contacts_name.setText(mmcontacts.get(position).getUserIp().split("@")[0]);
       return   view;
     }
     class ViewHolder{

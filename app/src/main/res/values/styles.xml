@@ -33,6 +33,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">@dimen/normalButtonHeight</item>
     </style>
+
     <style name="bigGreenButton" parent="@style/bigButton">
         <item name="android:textColor">@color/green_btn_text_color</item>
         <item name="android:background">@drawable/bg_btn_style_green</item>
@@ -41,6 +42,11 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:textColor">@color/green_btn_text_color</item>
         <item name="android:background">@drawable/bg_btn_style_reg</item>
+    </style>
+
+    <style name="SmallAddButton" >
+       <!-- <item name="android:textColor">@color/green_btn_text_color</item>-->
+        <item name="android:background">@drawable/sm_btn_style_reg</item>
     </style>
 
     <dimen name="bigButtonTextSize">20dip</dimen>

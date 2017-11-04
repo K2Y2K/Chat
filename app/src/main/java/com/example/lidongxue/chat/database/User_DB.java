@@ -281,6 +281,34 @@ public class User_DB {
         }
         insertMsg(msgList.getMsg_list_id(), send_name, msg_content, msg_time, "text", from_type);
     }
+    /*
+    * 删除某列表的所有聊天信息
+    * */
+    public void deleteAllMsg(int user_id,String to_name){
+        int msg_list_id=getMsgListID(user_id,to_name);
+        Log.d("deleteAllMsg 查询列表数：","msg_list_id is:"+msg_list_id);
+        if(msg_list_id!=-1) {
+            db.execSQL("delete from msg where msg_list_id=?", new String[]{msg_list_id + ""});
+            Log.d("deleteAllMsg 删除所有的消息"," ");
+        }
+    }
+    public  int getMsgListID(int user_id,String to_name){
+        int msg_list_id=-1;
+        List<String>  msg_list_ids=new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from msg_list where user_id=? and to_name=?",
+                new String[]{user_id + "",to_name});
+        if(cursor!=null){
+            Log.d("getMsgListID 查询列表数：",cursor.getCount()+"");
+            while (cursor.moveToNext()){
+                 msg_list_id = cursor.getInt(cursor.getColumnIndex("msg_list_id"));
+                msg_list_ids.add(String.valueOf(msg_list_id));
+            }
+            Log.d("msg_list_ids 查询列表数：",msg_list_ids.size()+"");
+        }
+        return  msg_list_id;
+
+    }
+
     /**
      * 获取和某某聊天的消息
      *

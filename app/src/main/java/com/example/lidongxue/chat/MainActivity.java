@@ -169,6 +169,7 @@ public class MainActivity extends BaseActivity
         MenuInflater infla=new MenuInflater(this);
         infla.inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override

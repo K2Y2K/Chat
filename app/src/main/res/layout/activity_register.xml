@@ -42,15 +42,24 @@
             android:paddingLeft="@dimen/activity_login1_edittext_paddingleft" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
+    <!--<Button
         android:id="@+id/register"
         android:background="@drawable/selector_reg_send_code"
         android:enabled="true"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/login_marginBottom_2"
         android:layout_marginTop="@dimen/login_margintop_2"
         android:text="@string/activity_register_button_text" />
+-->
 
+    <Button
+        android:id="@+id/register"
+        style="@style/bigGreenButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_marginBottom_2"
+        android:layout_marginTop="@dimen/login_margintop_2"
+        android:text="@string/activity_register_button_text"
+        />
 </LinearLayout>

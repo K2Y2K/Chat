@@ -342,14 +342,14 @@ public class ConnectionService extends Service {
                         System.out.println("获取登录状态6" + connection.isAuthenticated());
                         ConnectionService.this.connection.login(userName, password);//登录
 
-                        System.out.println("获取登录状态" + connection.isAuthenticated());
-                        System.out.println("获取登录用户名1" + connection.getUser());
-                        System.out.println("获取登录用户名2" + connection.getConfiguration().getUsername());
-                        System.out.println("获取登录用户登录状态" + connection.getConfiguration().isSendPresence());
+                        System.out.println("获取登录状态" + connection.isAuthenticated());//true
+                        System.out.println("获取登录用户名1" + connection.getUser());//333@127.0.0.1/Smack
+                        System.out.println("获取登录用户名2" + connection.getConfiguration().getUsername());//null
+                        System.out.println("获取登录用户登录状态" + connection.getConfiguration().isSendPresence());//false
 
-                        System.out.println("获取登录密码" + connection.getConfiguration().getPassword());
-                        System.out.println("获取登录资源" + connection.getConfiguration().getResource());
-                        System.out.println("获取服务器名" + connection.getServiceName());
+                        System.out.println("获取登录密码" + connection.getConfiguration().getPassword());//null
+                        System.out.println("获取登录资源" + connection.getConfiguration().getResource());//Smack
+                        System.out.println("获取服务器名" + connection.getServiceName());//127.0.0.1
 
                         user = dbHelper.setUser(userName + "@127.0.0.1", password);//插入数据库
                         UserCache.save(userName + "@127.0.0.1", password);
@@ -384,8 +384,8 @@ public class ConnectionService extends Service {
 
 
                 message.setBody(data);
-                LogUtil.d("TAG", "getOfflineMessage() message.getBody() is:"+user.getUser_id()+";"+
-                        message.getFrom()+"; data"+data+";"+type+";");
+                LogUtil.d("TAG", "getOfflineMessage() message.getBody() user.getUser_id() is:"
+                        +user.getUser_id()+"; message.getFrom():"+ message.getFrom()+"; data:"+data+";type:"+type+";");
                 //保存离线信息
                 //dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, System.currentTimeMillis() + "", message.getFrom(), 2);
                 dbHelper.insertOneMsg(user.getUser_id(), message.getFrom(), data, getDate() + "", message.getFrom(), 2);
@@ -452,12 +452,21 @@ public class ConnectionService extends Service {
             List<UserBean.UserBeanDetails> detail = new ArrayList<>();
             Set<RosterEntry> entries= Roster.getInstanceFor(connection).getEntries();
             for (RosterEntry entry : entries) {
+                //entry.getType():none;entry.getStatus()null　if()却false?
+                if(entry.getType().equals("none") && entry.getStatus()==null){
+                    Log.d(getClass().getSimpleName(),"该好友被删除entry.getType():"+entry.getType()+
+                                    ";entry.getStatus()"+entry.getStatus());
+                    continue;
+                }else{
+                    Log.d(getClass().getSimpleName(),"entry.getType():"+entry.getType()+
+                            ";entry.getStatus()"+entry.getStatus());
                 UserBean.UserBeanDetails user = new UserBean.UserBeanDetails();
                 user.setUserIp(entry.getUser());
                 user.setPickName(entry.getName());
                 user.setType(entry.getType());
                 user.setStatus(entry.getStatus());
                 detail.add(user);
+                }
 
             }
             return detail;
@@ -606,6 +615,9 @@ public class ConnectionService extends Service {
             Roster roster = Roster.getInstanceFor(connection);
             RosterEntry entry = roster.getEntry(username);
             roster.removeEntry(entry);
+
+            Log.d("deleteFriend()","user.getUser_id():"+user.getUser_id()+"username:"+username);
+            dbHelper.deleteAllMsg(user.getUser_id(),username);
             return true;
 
         }catch (Exception e){

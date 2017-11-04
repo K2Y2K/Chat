@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lidongxue.chat.MainActivity;
 import com.example.lidongxue.chat.R;
 import com.example.lidongxue.chat.app.base.BaseApp;
 import com.example.lidongxue.chat.database.User_DB;
@@ -36,6 +37,8 @@ public class UserInfoActivity extends BaseActivity {
     TextView muser_info_id;
     @BindView(R.id.user_add)
     Button muser_add;
+    @BindView(R.id.user_delete)
+    Button muser_delete;
     private ConnectionService service;
     private List<User> userinfo;
     private User user;
@@ -62,11 +65,11 @@ public class UserInfoActivity extends BaseActivity {
         }
         if(BaseApp.service!=null){
             user = BaseApp.service.getUser();
-            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user.getUser_id());
-            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user.getUser_name());
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity  user.getUser_id() is service:" + user.getUser_id());
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity  user.getUser_name()is service:" + user.getUser_name());
             user_info= BaseApp.service.getUserInfo(user_contacts_name);
-            Log.i(this.getClass().getSimpleName(), "UserInfoActivity is service:" + user_info.getUserIp()
-            +";"+user_info.getPickName()+";"+user_info.getStatus()+";"+user_info.getType());
+            Log.i(this.getClass().getSimpleName(), "UserInfoActivity user_info.getUserIp() is service:" + user_info.getUserIp()
+            +";user_info.getPickName():"+user_info.getPickName()+";user_info.getStatus():"+user_info.getStatus()+";user_info.getType():"+user_info.getType());
             muser_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -74,8 +77,21 @@ public class UserInfoActivity extends BaseActivity {
                     MsgList msgList = new User_DB(UserInfoActivity.this).checkMsgList(user.getUser_id(), user_contacts_name);
                     Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
                     intent.putExtra("msg_list_id", msgList.getMsg_list_id());
-                    intent.putExtra("to_name", user_contacts_name);
+                    intent.putExtra("to_name", user_info.getUserIp());//user_contacts_name与user_info.getUserIp()一致
                     startActivity(intent);
+                }
+            });
+            muser_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Boolean isdelete=BaseApp.service.deleteFriend(user_info.getUserIp());
+                    Log.d(getClass().getSimpleName(),"删除好友isdelete："+isdelete);
+                    if(isdelete){
+                        Log.d(getClass().getSimpleName(),"删除好友成功："+isdelete);
+                        Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
             });
         }

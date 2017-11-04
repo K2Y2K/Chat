@@ -52,7 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/login_marginBottom_2"
         android:layout_marginTop="@dimen/login_margintop_2"
-        android:text="@string/login_bn" />
+        android:text="@string/login_bn"
+        />
 
     <View
         android:layout_width="wrap_content"
