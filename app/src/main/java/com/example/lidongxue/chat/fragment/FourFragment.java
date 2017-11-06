@@ -154,8 +154,7 @@ public class FourFragment extends Fragment {
                     mExitView.findViewById(R.id.tvExitAccount).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            /*RongIMClient.getInstance().logout();
-                         UserCache.clear();*/
+
 
                             Boolean logout_user=BaseApp.service.logout1();
                             LogUtil.d("---退出账号--",logout_user);
@@ -178,7 +177,7 @@ public class FourFragment extends Fragment {
                     mExitView.findViewById(R.id.tvExitApp).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //RongIMClient.getInstance().disconnect();
+
                             //Boolean logout_app=service.disConnect();
                             LogUtil.d("---退出应用--","");
                             mExitDialog.dismiss();

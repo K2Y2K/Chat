@@ -19,6 +19,7 @@ import com.example.lidongxue.chat.R;
 
 public class AppWidget extends AppWidgetProvider {
     private final  String ACTION_IMAGEVIEW="action_imageview";
+    private RemoteViews remoteViews;
 
     //接收广播事件
     @Override
@@ -33,7 +34,7 @@ public class AppWidget extends AppWidgetProvider {
         if (action.equals(ACTION_IMAGEVIEW)) {
             // 只能通过远程对象来设置appWidget中的状态
             //系统时间调用System.currentTimeMillis()
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.appwidget_layout);
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.appwidget_layout);
            // remoteViews.setTextViewText(R.id.tv_show, ""+System.currentTimeMillis());
             remoteViews.setImageViewResource(R.id.iv_show,R.drawable.ic_preview);
 
@@ -55,9 +56,9 @@ public class AppWidget extends AppWidgetProvider {
 
 
         // 小部件在Launcher桌面的布局
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.appwidget_layout);
+         remoteViews = new RemoteViews(context.getPackageName(), R.layout.appwidget_layout);
 
-        remoteViews.setImageViewResource(R.id.iv_show,R.drawable.chat_5);
+        remoteViews.setImageViewResource(R.id.iv_show,R.drawable.ic_preview);
         ComponentName componentName = new ComponentName(context, AppWidget.class);
         // 事件
         //桌面创建小部件时　发送监听图片被点击时的广播

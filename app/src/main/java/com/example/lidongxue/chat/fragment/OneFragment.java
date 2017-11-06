@@ -147,6 +147,9 @@ public class OneFragment extends Fragment implements AdapterView.OnItemClickList
 
     @Override
     public void onDestroy() {
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
 
         super.onDestroy();
 

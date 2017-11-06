@@ -97,16 +97,7 @@
             android:textSize="@dimen/fragment_me_textsize"/>
     </LinearLayout>
 
-    <!--<com.example.lidongxue.chat.view.OptionItemView
 
-        android:id="@+id/oivExit"
-        style="@style/OptionItem"
-        android:background="@drawable/selector_option_item"
-        app:left_text="退出"
-        app:left_text_color="@color/black0"
-        app:left_text_margin_left="@dimen/option_item_margin_left"
-        app:left_text_size="16sp" />
--->
 
 
 

@@ -14,6 +14,10 @@ public class UserPic implements Parcelable{
     byte[] pic_bigmap;
     String pic_time;
 
+    public UserPic() {
+
+    }
+
     public int getPic_id() {
         return pic_id;
     }
