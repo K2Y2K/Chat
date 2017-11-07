@@ -1,6 +1,8 @@
 package com.example.lidongxue.chat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +46,16 @@ public class MyInfoActivity extends BaseActivity {
         person_name.setText(UserCache.getName());
         //LogUtil.d("---myinfoActivity--2db查询-",(dbHelper.getUser(UserCache.getName())).getUser_name());
 
+        person_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //打开手机的图库;
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivity(intent);
+            }
+        });
     }
 
 }

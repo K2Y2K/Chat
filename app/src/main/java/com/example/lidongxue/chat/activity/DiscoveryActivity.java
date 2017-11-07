@@ -210,11 +210,11 @@ public class DiscoveryActivity extends BaseActivity {
                 break;
 
             case R.id.menu_addmoment:
-                addUserPic();
+               // addUserPic();
 
-               /* Intent intent3=new Intent(this,AddFriActivity.class);
-                intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent3);*/
+                Intent intent3=new Intent(this,ShareMomentAcitivity.class);
+
+                startActivity(intent3);
                 break;
 
         }
